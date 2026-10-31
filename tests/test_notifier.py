@@ -14,6 +14,7 @@ def fake_cfg(**overrides):
         pushplus_token="",
         wxpusher_app_token="",
         wxpusher_uid="",
+        wxpusher_topic_ids=[],
         wxpusher_spt="",
         bark_key="",
         bark_server="https://api.day.app",
@@ -34,6 +35,10 @@ class TestResolveChannel(unittest.TestCase):
     def test_wxpusher_spt(self):
         cfg = fake_cfg(wxpusher_spt="SPT_x")
         self.assertEqual(notifier.resolve_channel(cfg), "wxpusher_spt")
+
+    def test_wxpusher_topic_only(self):
+        cfg = fake_cfg(wxpusher_app_token="AT_x", wxpusher_topic_ids=[123, 456])
+        self.assertEqual(notifier.resolve_channel(cfg), "wxpusher")
 
     def test_pushplus_fallback(self):
         cfg = fake_cfg(pushplus_token="tok")
