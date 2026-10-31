@@ -1,0 +1,58 @@
+name: rainwatch
+
+on:
+  schedule:
+    # 每小时整点运行一次（UTC）。北京时间 = UTC+8，即每小时 :00。
+    # 每天 08:00 / 19:00 的日报由程序按北京时间判断并补发。
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      force_report:
+        description: "强制推送一次完整日报（云端测试用）"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rainwatch
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run rainwatch
+        env:
+          PYTHONPATH: src
+          # 在仓库 Settings → Secrets and variables → Actions 中配置（至少配一组推送通道）：
+          WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
+          WXPUSHER_UID: ${{ secrets.WXPUSHER_UID }}
+          WXPUSHER_SPT: ${{ secrets.WXPUSHER_SPT }}
+          QWEATHER_HOST: ${{ secrets.QWEATHER_HOST }}
+          QWEATHER_KEY: ${{ secrets.QWEATHER_KEY }}
+          # 备选通道（可不配）：
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        run: python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }}
+
+      - name: Commit data and dashboard
+        run: |
+          git config user.name "rainwatch-bot"
+          git config user.email "rainwatch-bot@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A data docs
+            git commit -m "data: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
