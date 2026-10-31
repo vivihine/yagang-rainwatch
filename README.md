@@ -102,6 +102,8 @@ python -m rainwatch --dry-run             # 抓取 + 计算 + 生成看板 + 打
 5. Actions 页面 → 左侧 `rainwatch` → `Run workflow` 手动跑一次，刷新看板确认
 6. 把看板地址填到 `config.toml` 的 `dashboard_url`，再运行一次 `python tools/github_deploy.py` 同步
 
+> 常见问题：如果部署脚本提示 `.github/workflows/rainwatch.yml` 上传失败（HTTP 404），说明 GitHub token 缺少 **`workflow`** 权限。到 Settings → Developer settings → Tokens (classic) 编辑该 token，把 `repo` 和 `workflow` 都勾上，Regenerate 后用新 token 更新 `.env.local`，重新运行部署脚本即可。
+
 ### 方式 B：本机已安装 git
 
 1. 在 GitHub 新建**公开仓库**（如 `yagang-rainwatch`），把本目录推送上去
