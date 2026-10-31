@@ -12,7 +12,7 @@ daily_report_hours = [8, 19]      # 每天定时日报的时刻（整点）
 data_dir = "data"
 docs_dir = "docs"
 # 部署 GitHub Pages 后填写，用于微信消息里的“查看看板”链接
-dashboard_url = ""
+dashboard_url = "https://vivihine.github.io/yagang-rainwatch/"
 
 [sources.openmeteo]
 enabled = true
