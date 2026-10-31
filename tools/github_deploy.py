@@ -155,6 +155,7 @@ def main(argv=None) -> int:
     parser.add_argument("--repo", default=DEFAULT_REPO, help=f"仓库名（默认 {DEFAULT_REPO}）")
     parser.add_argument("--private", action="store_true", help="建私有仓库（免费版 Pages 不可用）")
     parser.add_argument("--skip-secrets", action="store_true", help="不自动写入 Actions Secrets")
+    parser.add_argument("--trigger", action="store_true", help="部署后自动触发一次 Actions 运行")
     parser.add_argument("--dry-run", action="store_true", help="只列出将上传的文件，不实际调用 API")
     args = parser.parse_args(argv)
 
@@ -265,16 +266,20 @@ def main(argv=None) -> int:
     print(f"仓库：{repo['html_url']}")
     print(f"看板：{pages_url or '(Pages 未开启)'}")
     print(f"文件：新增 {uploaded}，更新 {updated}，失败 {failed}")
-    print("\n接下来（约 2 分钟，在仓库网页操作）：")
-    print("1. Settings → Secrets and variables → Actions → New repository secret，添加：")
-    print("     WXPUSHER_APP_TOKEN = 你的 WxPusher 应用 appToken（推荐，免费微信推送）")
-    print("     WXPUSHER_UID       = 你的 WxPusher 用户 UID")
-    print("     （或用 WXPUSHER_SPT 代替上面两项；和风天气可选：QWEATHER_HOST / QWEATHER_KEY）")
-    print("2. Actions 页面 → 左侧 rainwatch → Run workflow，手动跑一次验证")
-    print("3. 首次运行后刷新看板；本地 config.toml 里可把 dashboard_url 改成上面的看板地址并重新运行本脚本")
     if failed:
-        print(f"\n! 有 {failed} 个文件上传失败，请检查网络/token 权限后重试（脚本会增量覆盖）。", file=sys.stderr)
+        print("! 失败文件若为 .github/workflows/rainwatch.yml：说明 token 缺少 workflow 权限。", file=sys.stderr)
+        print("  解决：GitHub → Settings → Developer settings → Tokens (classic) → 编辑该 token", file=sys.stderr)
+        print("        勾选 repo + workflow → Regenerate → 更新 .env.local 后重新运行本脚本。", file=sys.stderr)
         return 1
+    print("下一步：Actions 页面 → rainwatch → Run workflow（或用本脚本 --trigger 自动触发）")
+    if args.trigger:
+        status, data = gh.request(
+            "POST", f"/repos/{owner}/{args.repo}/actions/workflows/rainwatch.yml/dispatches",
+            {"ref": "main", "inputs": {"force_report": "true"}})
+        if status in (201, 204):
+            print("✓ 已触发 Actions 运行，约 1 分钟后到 Actions 页面查看结果")
+        else:
+            print(f"! 触发 Actions 失败（HTTP {status}）：{data.get('message')}")
     return 0
 
 
