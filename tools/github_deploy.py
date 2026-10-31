@@ -99,10 +99,62 @@ def collect_files() -> list[Path]:
     return files
 
 
+SECRET_NAMES = ["WXPUSHER_APP_TOKEN", "WXPUSHER_UID", "WXPUSHER_SPT",
+                "QWEATHER_HOST", "QWEATHER_KEY", "BARK_KEY", "PUSHPLUS_TOKEN"]
+
+
+def load_local_secrets() -> dict:
+    """从本地 .env.local / 环境变量收集需要写入 GitHub Secrets 的值。"""
+    env: dict[str, str] = {}
+    env_file = ROOT / ".env.local"
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, value = line.split("=", 1)
+                value = value.strip()
+                if value and "xxxxxxxx" not in value:
+                    env[key.strip()] = value
+    for name in SECRET_NAMES:
+        if os.environ.get(name):
+            env[name] = os.environ[name].strip()
+    return {name: env[name] for name in SECRET_NAMES if env.get(name)}
+
+
+def set_actions_secrets(gh: "GitHub", owner: str, repo: str) -> None:
+    """自动把本地凭据写入仓库 Actions Secrets（需要 PyNaCl；没有则提示手动添加）。"""
+    secrets = load_local_secrets()
+    if not secrets:
+        print("! 本地 .env.local 没有可写入的凭据，跳过 Secrets 自动配置")
+        return
+    try:
+        from nacl import encoding, public
+    except ImportError:
+        print("! 未安装 PyNaCl，无法自动写 Secrets（可在仓库网页手动添加）：", "、".join(secrets))
+        return
+    status, key = gh.request("GET", f"/repos/{owner}/{repo}/actions/secrets/public-key")
+    if status != 200:
+        print(f"! 获取 Secrets 公钥失败（HTTP {status}）：{key.get('message')}")
+        return
+    box = public.SealedBox(public.PublicKey(key["key"].encode(), encoding.Base64Encoder()))
+    ok = 0
+    for name, value in secrets.items():
+        encrypted = base64.b64encode(box.encrypt(value.encode("utf-8"))).decode("ascii")
+        status, resp = gh.request("PUT", f"/repos/{owner}/{repo}/actions/secrets/{name}",
+                                  {"encrypted_value": encrypted, "key_id": key["key_id"]})
+        if status in (201, 204):
+            ok += 1
+            print(f"✓ 已写入 Secret：{name}")
+        else:
+            print(f"✗ Secret {name} 写入失败（HTTP {status}）：{resp.get('message')}")
+    print(f"✓ Actions Secrets：{ok}/{len(secrets)} 项已自动写入")
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="用 GitHub API 部署 yagang-rainwatch")
     parser.add_argument("--repo", default=DEFAULT_REPO, help=f"仓库名（默认 {DEFAULT_REPO}）")
     parser.add_argument("--private", action="store_true", help="建私有仓库（免费版 Pages 不可用）")
+    parser.add_argument("--skip-secrets", action="store_true", help="不自动写入 Actions Secrets")
     parser.add_argument("--dry-run", action="store_true", help="只列出将上传的文件，不实际调用 API")
     args = parser.parse_args(argv)
 
@@ -182,6 +234,10 @@ def main(argv=None) -> int:
                          {"default_workflow_permissions": "write"})
     print("✓ Actions 默认权限：read and write" if code in (200, 204)
           else f"! Actions 权限设置失败（HTTP {code}），可在仓库 Settings → Actions 手动改为 Read and write")
+
+    # 3.5) 自动把本地凭据写入 Actions Secrets（需要 PyNaCl）
+    if not args.skip_secrets:
+        set_actions_secrets(gh, owner, args.repo)
 
     # 4) 开启 GitHub Pages（main 分支 /docs）
     pages_url = ""
