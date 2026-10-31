@@ -97,6 +97,24 @@ python -m rainwatch --dry-run             # 抓取 + 计算 + 生成看板 + 打
 - **PushPlus**：如你愿意付费实名，也可继续用，填 `PUSHPLUS_TOKEN=xxx` 并在 config.toml 里设 `channel = "pushplus"`
 - **邮件**：暂未内置，需要时可扩展
 
+### 3.4 让多个同事一起接收（多用户，免费）
+
+WxPusher 支持多人订阅同一个应用，两种做法：
+
+**方式 1：逐个加 UID（人少时简单）**
+1. 让同事用微信扫应用详情里的「关注二维码」（或装 WxPusher App 登录）
+2. 你的后台「用户管理」里会多出他们的 UID
+3. 用英文逗号拼到 `WXPUSHER_UID`，如 `UID_aaa,UID_bbb`（本地 `.env.local` 改完运行 `python tools/github_deploy.py` 会自动同步到 GitHub Secrets）
+
+**方式 2：主题（推荐，人多且可自助）**
+1. WxPusher 后台 → 应用 → 主题 → 创建主题（如“鸦岗降雨预报”）
+2. 把主题的订阅二维码/链接发给同事，他们扫码订阅
+3. 把主题 ID 填到 `WXPUSHER_TOPIC_IDS`（多个用逗号分隔）；之后新同事自己扫码订阅即可，**不用再改配置**
+4. 改完运行 `python tools/github_deploy.py` 同步 Secrets
+
+> 微信里接收依赖微信 ClawBot 灰度插件；同事装 WxPusher App（安卓/iOS/鸿蒙，免费无广告）则不受限制。若同事不方便装 App，可考虑邮件通道或单位的企业微信/公众号（需要时告诉我，我可扩展）。
+
+
 > 不配置和风天气也能运行：程序会自动降级为 Open-Meteo 单数据源，只是没有双源校验和官方预警。
 
 ## 4. 部署到 GitHub Actions（推荐，0 元/月）
