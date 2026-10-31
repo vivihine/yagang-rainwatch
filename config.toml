@@ -1,0 +1,154 @@
+# ============================================================
+# 鸦岗断面降雨预报监测 · 配置文件
+# 修改配置不需要改代码。所有时间均为北京时间（Asia/Shanghai）。
+# 敏感信息（PushPlus token / 和风 Key / GitHub token）不写在这里，用环境变量或 .env.local。
+# ============================================================
+
+[general]
+timezone = "Asia/Shanghai"
+forecast_days = 5                 # 逐日报表天数（= 5天提前量）
+rolling_hours = [24, 72, 120]     # 滚动累计窗口（= 1天/3天/5天提前量）
+daily_report_hours = [8, 19]      # 每天定时日报的时刻（整点）
+data_dir = "data"
+docs_dir = "docs"
+# 部署 GitHub Pages 后填写，用于微信消息里的“查看看板”链接
+dashboard_url = ""
+
+[sources.openmeteo]
+enabled = true
+# 多模式同时取数，代码会自动取中位数作为主值、用模式分歧判断可靠性
+models = ["ecmwf_ifs025", "gfs_seamless", "cma_grapes_global"]
+
+[sources.qweather]
+enabled = true
+# 未配置环境变量 QWEATHER_KEY / QWEATHER_HOST 时自动跳过，降级为单数据源
+# 预警查询：新版接口 weatheralert/v1 按经纬度查询，默认取三区的区中心坐标（见 [district_centers]）
+warning_districts = ["从化", "花都", "白云"]
+# 也可直接补充经纬度点（纬度, 经度），例如：
+# warning_points = [[23.19, 113.19], [23.30, 113.16]]
+warning_points = []
+warning_types = ["暴雨"]
+warning_levels = ["黄色", "橙色", "红色"]
+
+[thresholds]
+# 24h 雨量分级（GB/T 28592-2012），单位 mm
+rain_levels_mm = [0.1, 10.0, 25.0, 50.0, 100.0, 250.0]
+rain_levels_name = ["小雨", "中雨", "大雨", "暴雨", "大暴雨", "特大暴雨"]
+# 水环境关注线（24h 口径，单位 mm）：初雨/面源/溢流/采样加密的判读阈值
+concern_mm = [10.0, 25.0, 50.0, 100.0]
+concern_name = ["关注", "显著", "高风险", "极高风险"]
+
+[alerts]
+# 事件推送：任一区 24h 预报等级 >= event_min_level 且等级较上次运行“升级”时触发
+event_min_level = "中雨"
+# 或 24h 雨量较上次运行上调超过 event_jump_mm，且发生跨等级
+event_jump_mm = 10.0
+max_event_push_per_day = 4       # 事件推送频次上限（不含每天2次日报）
+
+[model_agreement]
+# 模式间/双源一致性判定（mm）
+ok_mm = 5.0
+warn_mm = 10.0
+
+[notify]
+# auto：按环境变量自动选择推送通道：
+#   WXPUSHER_APP_TOKEN+WXPUSHER_UID（标准推送，推荐）> WXPUSHER_SPT（极简推送）> PUSHPLUS_TOKEN > BARK_KEY
+# 也可以固定指定：wxpusher / wxpusher_spt / pushplus / bark
+# 注意：PushPlus 自 2024-08 起发消息必须付费实名，本项目默认用免费的 WxPusher。
+channel = "auto"
+
+# ------------------------------------------------------------
+# 预报点位
+# 坐标校准说明（2026-10-31）：
+#   CH-01/CH-03/HD-02/BY-01 于 GeoNames 地名库核对；
+#   CH-01 另经 360 地图 POI 坐标核对；
+#   HD-01/BY-02/BY-03 来自《鸦岗断面拓朴关系》表；
+#   HD-03 为区中心参考点（近似）。
+#   approx = true 表示仍为近似坐标（看板上会标注“估算坐标”）。
+# ------------------------------------------------------------
+[[points]]
+id = "CH-01"
+name = "流溪河山庄"
+district = "从化"
+channel = "流溪河上游（省考断面）"
+lat = 23.515656
+lon = 113.556773
+approx = false
+
+[[points]]
+id = "CH-02"
+name = "太平场镇"
+district = "从化"
+channel = "流溪河中上游"
+lat = 23.44681
+lon = 113.47262
+approx = false
+
+[[points]]
+id = "CH-03"
+name = "从化城区"
+district = "从化"
+channel = "参考点（街口）"
+lat = 23.54992
+lon = 113.58099
+approx = false
+
+[[points]]
+id = "HD-01"
+name = "大坳"
+district = "花都"
+channel = "白坭河（省考断面）"
+lat = 23.300624
+lon = 113.164861
+approx = false
+
+[[points]]
+id = "HD-02"
+name = "白坭墟"
+district = "花都"
+channel = "白坭河中游"
+lat = 23.42472
+lon = 113.01727
+approx = false
+
+[[points]]
+id = "HD-03"
+name = "花都城区"
+district = "花都"
+channel = "参考点（新华）"
+lat = 23.40
+lon = 113.22
+approx = true
+
+[[points]]
+id = "BY-01"
+name = "李溪坝"
+district = "白云"
+channel = "流溪河下游"
+lat = 23.40412
+lon = 113.33240
+approx = false
+
+[[points]]
+id = "BY-02"
+name = "白云河口"
+district = "白云"
+channel = "流溪河入江口"
+lat = 23.249171
+lon = 113.221903
+approx = false
+
+[[points]]
+id = "BY-03"
+name = "鸦岗"
+district = "白云"
+channel = "断面本地（国考断面）"
+lat = 23.220407
+lon = 113.189357
+approx = false
+
+# 某点位坐标缺失时，用所属区的中心坐标兜底（并在日志中告警）
+[district_centers]
+"从化" = [23.54992, 113.58099]
+"花都" = [23.40, 113.22]
+"白云" = [23.20, 113.27]
