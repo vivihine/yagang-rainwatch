@@ -39,6 +39,7 @@ jobs:
           # 在仓库 Settings → Secrets and variables → Actions 中配置（至少配一组推送通道）：
           WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
           WXPUSHER_UID: ${{ secrets.WXPUSHER_UID }}
+          WXPUSHER_TOPIC_IDS: ${{ secrets.WXPUSHER_TOPIC_IDS }}
           WXPUSHER_SPT: ${{ secrets.WXPUSHER_SPT }}
           QWEATHER_HOST: ${{ secrets.QWEATHER_HOST }}
           QWEATHER_KEY: ${{ secrets.QWEATHER_KEY }}
