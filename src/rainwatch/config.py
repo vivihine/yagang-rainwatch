@@ -142,6 +142,18 @@ class Config:
         return os.environ.get("WXPUSHER_UID", "").strip()
 
     @property
+    def wxpusher_topic_ids(self) -> list[int]:
+        """WxPusher 主题 ID 列表（多人订阅时用，逗号分隔）。"""
+        raw = os.environ.get("WXPUSHER_TOPIC_IDS", "").strip().replace("，", ",")
+        ids: list[int] = []
+        for part in raw.split(","):
+            part = part.strip()
+            if part.isdigit():
+                ids.append(int(part))
+        return ids
+
+
+    @property
     def wxpusher_spt(self) -> str:
         return os.environ.get("WXPUSHER_SPT", "").strip()
 
