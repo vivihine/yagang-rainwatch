@@ -99,8 +99,8 @@ def collect_files() -> list[Path]:
     return files
 
 
-SECRET_NAMES = ["WXPUSHER_APP_TOKEN", "WXPUSHER_UID", "WXPUSHER_SPT",
-                "QWEATHER_HOST", "QWEATHER_KEY", "BARK_KEY", "PUSHPLUS_TOKEN"]
+SECRET_NAMES = ["WXPUSHER_APP_TOKEN", "WXPUSHER_UID", "WXPUSHER_TOPIC_IDS",
+                "WXPUSHER_SPT", "QWEATHER_HOST", "QWEATHER_KEY", "BARK_KEY", "PUSHPLUS_TOKEN"]
 
 
 def load_local_secrets() -> dict:
