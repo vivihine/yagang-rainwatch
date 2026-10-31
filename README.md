@@ -8,6 +8,23 @@
 - 看板：GitHub Pages 静态页
 - 依赖：**纯 Python 标准库**（Python 3.11+），无需 pip install
 
+## 已部署实例（2026-10-31）
+
+| 项 | 地址 / 说明 |
+|---|---|
+| 代码仓库 | <https://github.com/vivihine/yagang-rainwatch> |
+| 看板（手机/电脑均可打开） | <https://vivihine.github.io/yagang-rainwatch/> |
+| 云端运行记录 | <https://github.com/vivihine/yagang-rainwatch/actions> |
+| 推送通道 | WxPusher（App 接收，永久免费）；微信 ClawBot 通道可选绑定 |
+| 数据源 | Open-Meteo 多模式 + 和风天气 7天预报/新版预警（双源校验） |
+| 运行方式 | GitHub Actions 每小时整点自动运行；每天 08:00 / 19:00 推送日报；达阈值/官方预警时即时推送 |
+
+**日常维护**
+- 改点位/阈值/推送时间：改本地 `config.toml` → 运行 `python tools/github_deploy.py` 同步（脚本会保留云端最新的 `data/`、`docs/`，不会覆盖）
+- 本地预览：`.\run.ps1 --dry-run`；本地手动发一条：`.\run.ps1 --force-report`
+- 云端手动跑一次：仓库 Actions → rainwatch → Run workflow（可勾选 force_report 强制发日报）
+- GitHub token 7 天过期不影响云端运行（Actions 用内置 token），只有再次本地部署时才需要重新生成
+
 ---
 
 ## 1. 本地跑通（不需要任何账号）
