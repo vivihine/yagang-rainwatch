@@ -202,8 +202,8 @@ def main(argv=None) -> int:
         print(f"✗ 创建仓库失败（HTTP {code}）：{repo.get('message')}", file=sys.stderr)
         return 2
 
-    # 2) 逐个文件上传（已存在则更新）
-    uploaded = updated = failed = 0
+    # 2) 逐个文件上传（已存在则更新；data/ docs/ 是 Actions 运行时产物，不覆盖云端版本）
+    uploaded = updated = failed = kept_remote = 0
     total = len(files)
     for idx, rel in enumerate(files, 1):
         api_path = f"/repos/{owner}/{args.repo}/contents/{urllib.parse.quote(rel.as_posix())}"
@@ -214,6 +214,10 @@ def main(argv=None) -> int:
         }
         status, existing = gh.request("GET", api_path)
         if status == 200 and existing.get("sha"):
+            if rel.parts and rel.parts[0] in ("data", "docs"):
+                # 云端已有 Actions 生成的最新数据/看板，避免用本地旧数据覆盖
+                kept_remote += 1
+                continue
             payload["sha"] = existing["sha"]
             action = "更新"
         else:
@@ -265,7 +269,7 @@ def main(argv=None) -> int:
     print("\n================ 部署完成 ================")
     print(f"仓库：{repo['html_url']}")
     print(f"看板：{pages_url or '(Pages 未开启)'}")
-    print(f"文件：新增 {uploaded}，更新 {updated}，失败 {failed}")
+    print(f"文件：新增 {uploaded}，更新 {updated}，保留云端 {kept_remote}，失败 {failed}")
     if failed:
         print("! 失败文件若为 .github/workflows/rainwatch.yml：说明 token 缺少 workflow 权限。", file=sys.stderr)
         print("  解决：GitHub → Settings → Developer settings → Tokens (classic) → 编辑该 token", file=sys.stderr)
