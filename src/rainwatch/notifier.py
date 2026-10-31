@@ -39,7 +39,7 @@ def resolve_channel(cfg: Config) -> str:
     configured = str(cfg.notify.get("channel") or "auto").strip().lower()
     if configured and configured != "auto":
         return configured
-    if cfg.wxpusher_app_token and cfg.wxpusher_uid:
+    if cfg.wxpusher_app_token and (cfg.wxpusher_uid or cfg.wxpusher_topic_ids):
         return "wxpusher"
     if cfg.wxpusher_spt:
         return "wxpusher_spt"
@@ -59,13 +59,18 @@ def _html_to_text(text: str) -> str:
 
 
 def _send_wxpusher(cfg: Config, title: str, content_html: str) -> tuple[bool, dict]:
-    payload = {
+    payload: dict = {
         "appToken": cfg.wxpusher_app_token,
         "content": content_html,
         "contentType": 2,  # 2 = HTML
-        "uids": [uid.strip() for uid in cfg.wxpusher_uid.split(",") if uid.strip()],
         "summary": title[:100],
     }
+    uids = [uid.strip() for uid in cfg.wxpusher_uid.split(",") if uid.strip()]
+    topics = cfg.wxpusher_topic_ids
+    if uids:
+        payload["uids"] = uids
+    if topics:
+        payload["topicIds"] = topics
     if cfg.dashboard_url:
         payload["url"] = cfg.dashboard_url
     response = post_json(WXPUSHER_SEND, payload, timeout=30, retries=2)
