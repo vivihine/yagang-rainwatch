@@ -1,0 +1,2 @@
+# 本项目纯标准库实现，没有第三方依赖。
+# 部署时无需 pip install；Python 3.11+ 即可（使用了 tomllib / zoneinfo）。
