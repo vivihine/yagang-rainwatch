@@ -272,6 +272,11 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         err_html = '<p class="muted">和风天气部分请求告警：' + html_mod.escape("；".join(qw_errors[:3])) + "</p>"
 
     models = "、".join(report.get("sources", {}).get("openmeteo", {}).get("models", []))
+    repo_link = ""
+    if cfg.repo_url:
+        base = html_mod.escape(cfg.repo_url)
+        repo_link = (f'<br><a href="{base}/tree/main/data">历史数据下载（CSV / JSON，每小时自动更新）</a>'
+                     f' · <a href="{base}">项目仓库</a>')
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -324,7 +329,7 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <table><thead><tr><th>控制点</th><th>区</th><th>河段</th>{''.join(f'<th>{h//24}天</th>' for h in horizons)}</tr></thead>
 <tbody>{''.join(point_rows)}</tbody></table>
 <footer>自动生成 · 数据来源 Open-Meteo（CC BY 4.0）与和风天气 · 预报存在不确定性，请结合官方预警使用<br>
-统计口径：{html_mod.escape(agreement.get('summary') or '')}</footer>
+统计口径：{html_mod.escape(agreement.get('summary') or '')}{repo_link}</footer>
 </div></body></html>
 """
 
