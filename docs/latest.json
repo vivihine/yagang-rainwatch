@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-01T22:00",
+  "run_time": "2026-11-01T23:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-02",
@@ -246,7 +246,7 @@
         },
         {
           "hours": 120,
-          "mm": 3.6,
+          "mm": 3.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -554,7 +554,7 @@
       "rolling": {
         "24": 0.2,
         "72": 3.1,
-        "120": 3.6
+        "120": 3.7
       }
     },
     "BY-01": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-01T22:00",
+      "fetched_at": "2026-11-01T23:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-01T22:00",
+      "fetched_at": "2026-11-01T23:00",
       "errors": []
     }
   },
