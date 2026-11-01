@@ -180,6 +180,13 @@ def handler(event, context):
 | `data/csv/yagang_rain_alerts.csv` | 推送记录 |
 | `data/state.json` | 推送状态/去重/上次预报快照 |
 
+**历史数据下载（每小时自动更新，永久累积）**：
+- 预报 CSV（Excel 可直接打开）：<https://github.com/vivihine/yagang-rainwatch/blob/main/data/csv/yagang_rain_forecast.csv>
+- 推送记录 CSV：<https://github.com/vivihine/yagang-rainwatch/blob/main/data/csv/yagang_rain_alerts.csv>
+- 每次运行完整 JSON（按月）：<https://github.com/vivihine/yagang-rainwatch/tree/main/data/history>
+- 最近一次完整报告：<https://github.com/vivihine/yagang-rainwatch/blob/main/docs/latest.json>
+- 下载方法：打开文件页 → **Download raw file** → Excel 打开（带 BOM，中文不乱码）；看板底部也有「历史数据下载」入口。
+
 CSV 字段：`run_time, kind, target, district, point_id, point_name, mm, level, concern, spread_mm, qweather_mm, agreement`。
 其中 `kind` 为 `daily`（区级逐日）、`rolling`（区级滚动累计）、`point_daily`/`point_rolling`（点位），可直接与断面水质数据按 `district/日期` 关联做“降雨—水质响应”分析。
 
