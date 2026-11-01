@@ -17,6 +17,7 @@ GENERAL_DEFAULTS = {
     "data_dir": "data",
     "docs_dir": "docs",
     "dashboard_url": "",
+    "repo_url": "",
 }
 
 OPENMETEO_DEFAULTS = {
@@ -184,6 +185,10 @@ class Config:
     @property
     def dashboard_url(self) -> str:
         return (self.general.get("dashboard_url") or os.environ.get("DASHBOARD_URL", "")).strip()
+
+    @property
+    def repo_url(self) -> str:
+        return (self.general.get("repo_url") or os.environ.get("REPO_URL", "")).strip().rstrip("/")
 
     # ---------------- 路径 ----------------
     @property
