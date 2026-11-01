@@ -4,7 +4,10 @@ on:
   schedule:
     # 每小时整点运行一次（UTC）。北京时间 = UTC+8，即每小时 :00。
     # 每天 08:00 / 19:00 的日报由程序按北京时间判断并补发。
+    # 注意：GitHub 免费版定时任务可能被延迟或丢弃（尤其 UTC 整点），
+    # 因此额外加一个 :35 备份触发，并在 README 7.1 提供外部定时器方案。
     - cron: "0 * * * *"
+    - cron: "35 * * * *"
   workflow_dispatch:
     inputs:
       force_report:
