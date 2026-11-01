@@ -183,12 +183,41 @@ CSV 字段：`run_time, kind, target, district, point_id, point_name, mm, level,
 
 ## 7. 提醒规则
 
-- **日报**：每天 08:00、19:00（北京时间）各一条完整简报；错过时刻会在下一次运行时补发
+- **日报**：每天 08:00、19:00（北京时间）各一条完整简报；错过时刻会在下一次运行时补发（3 小时窗口内）
 - **事件提醒**（去重，每天最多 4 次）：
   - 任一区未来24h预报等级升级到“中雨/大雨/暴雨”
   - 24h预报较上次运行上调 ≥10mm 且跨等级
   - 官方暴雨预警（黄/橙/红）
 - 同一事件24小时内不重复推送；日报时段会顺带把已包含的事件标记为已通知
+
+### 7.1 定时可靠性（重要，2026-11-01 实测踩坑）
+
+**现象**：GitHub Actions 自带的 `schedule` 定时在免费账号/新仓库上**可能被延迟甚至丢弃**（2026-10-31 夜实测：一夜只跑了 2 次，08:00 那次完全没有执行，导致早报漏发；手动补发成功）。这不是程序 bug，GitHub 对定时精度不做 SLA。
+
+**对策（推荐）：用一个免费外部定时器调用 GitHub API 触发运行**；GitHub 自带定时保留作备份，程序有去重逻辑，不会重复推送：
+
+1. 创建**细粒度 token**（只给这一个仓库的 Actions 权限，90 天）：
+   GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token
+   - Name：`rainwatch-cron`，Expiration：90 days
+   - Repository access：Only select repositories → `yagang-rainwatch`
+   - Permissions → Repository permissions → **Actions: Read and write**
+   - 生成后复制 `github_pat_...`
+2. 注册免费定时服务 <https://cron-job.org>，创建任务：
+   - URL：`https://api.github.com/repos/vivihine/yagang-rainwatch/actions/workflows/rainwatch.yml/dispatches`
+   - 频率：Every 1 hour
+   - Advanced → Request method：**POST**
+   - Headers：
+     ```
+     Authorization: Bearer github_pat_xxx
+     Accept: application/vnd.github+json
+     Content-Type: application/json
+     ```
+   - Request body：`{"ref":"main"}`
+   - 保存后点 **Test run**，返回 HTTP 204 即成功；Actions 页面约 1 分钟内出现一次 `workflow_dispatch` 运行
+3. 该 token 即使泄露也只能触发/查看这个仓库的 Actions，改不了代码；90 天后重新生成替换即可
+
+**备选**：Cloudflare Workers Cron（token 存 Cloudflare Secret，更安全但多一步注册）；或迁移到国内云函数（最稳，需实名账号）。
+
 
 ## 8. 已知限制
 
