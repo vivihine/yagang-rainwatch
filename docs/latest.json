@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-01T17:00",
+  "run_time": "2026-11-01T18:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-02",
@@ -97,7 +97,7 @@
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 0.2
+            "mm": 0.3
           }
         },
         {
@@ -114,14 +114,14 @@
         },
         {
           "hours": 120,
-          "mm": 4.8,
+          "mm": 5.2,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 7.3
+            "mm": 8.1
           }
         }
       ],
@@ -159,7 +159,7 @@
             "mm": 2.6,
             "level": "小雨"
           },
-          "qweather_mm": 1.4,
+          "qweather_mm": 1.9,
           "agreement": "一致"
         },
         {
@@ -187,7 +187,7 @@
             "mm": 0.0,
             "level": "无雨"
           },
-          "qweather_mm": 2.8,
+          "qweather_mm": 3.5,
           "agreement": "一致"
         },
         {
@@ -201,7 +201,7 @@
             "mm": 0.2,
             "level": "小雨"
           },
-          "qweather_mm": 3.2,
+          "qweather_mm": 3.1,
           "agreement": "一致"
         },
         {
@@ -215,7 +215,7 @@
             "mm": 12.8,
             "level": "中雨"
           },
-          "qweather_mm": 2.3,
+          "qweather_mm": 1.5,
           "agreement": "一致"
         }
       ],
@@ -253,7 +253,7 @@
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 5.4
+            "mm": 5.5
           }
         }
       ],
@@ -268,7 +268,7 @@
           "mm": 12.8,
           "level": "中雨"
         },
-        "qweather_mm": 2.3,
+        "qweather_mm": 1.5,
         "agreement": "一致"
       },
       "overall_concern": "无"
@@ -291,7 +291,7 @@
             "mm": 2.6,
             "level": "小雨"
           },
-          "qweather_mm": 1.5,
+          "qweather_mm": 1.7,
           "agreement": "一致"
         },
         {
@@ -319,7 +319,7 @@
             "mm": 0.0,
             "level": "无雨"
           },
-          "qweather_mm": 3.6,
+          "qweather_mm": 4.0,
           "agreement": "一致"
         },
         {
@@ -347,7 +347,7 @@
             "mm": 12.8,
             "level": "中雨"
           },
-          "qweather_mm": 3.5,
+          "qweather_mm": 3.1,
           "agreement": "接近"
         }
       ],
@@ -378,14 +378,14 @@
         },
         {
           "hours": 120,
-          "mm": 6.2,
+          "mm": 6.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
           "concern": "关注",
           "max_point": {
             "name": "李溪坝",
-            "mm": 7.9
+            "mm": 8.3
           }
         }
       ],
@@ -400,7 +400,7 @@
           "mm": 12.8,
           "level": "中雨"
         },
-        "qweather_mm": 3.5,
+        "qweather_mm": 3.1,
         "agreement": "接近"
       },
       "overall_concern": "关注"
@@ -427,9 +427,9 @@
         "2026-11-06": "中雨"
       },
       "rolling": {
-        "24": 0.2,
+        "24": 0.3,
         "72": 1.8,
-        "120": 7.3
+        "120": 8.1
       }
     },
     "CH-02": {
@@ -454,7 +454,7 @@
       "rolling": {
         "24": 0.0,
         "72": 1.5,
-        "120": 4.5
+        "120": 4.9
       }
     },
     "CH-03": {
@@ -504,7 +504,7 @@
       "rolling": {
         "24": 1.2,
         "72": 3.2,
-        "120": 5.4
+        "120": 5.5
       }
     },
     "HD-02": {
@@ -579,7 +579,7 @@
       "rolling": {
         "24": 0.7,
         "72": 1.6,
-        "120": 7.9
+        "120": 8.3
       }
     },
     "BY-02": {
@@ -604,7 +604,7 @@
       "rolling": {
         "24": 1.2,
         "72": 3.2,
-        "120": 5.4
+        "120": 5.5
       }
     },
     "BY-03": {
@@ -629,14 +629,14 @@
       "rolling": {
         "24": 1.2,
         "72": 3.2,
-        "120": 5.4
+        "120": 5.5
       }
     }
   },
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-01T17:00",
+      "fetched_at": "2026-11-01T18:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-01T17:00",
+      "fetched_at": "2026-11-01T18:00",
       "errors": []
     }
   },
