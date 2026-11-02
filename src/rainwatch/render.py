@@ -61,6 +61,15 @@ def _rolling_map(district_data: dict) -> dict:
     return {item["hours"]: item for item in district_data.get("rolling", [])}
 
 
+def _display_order(cfg: Config) -> list[str]:
+    """看板/消息中区县的展示顺序（配置 display_districts，非法项忽略并补全）。"""
+    order = [d for d in cfg.display_districts if d in cfg.districts]
+    for d in cfg.districts:
+        if d not in order:
+            order.append(d)
+    return order
+
+
 def _peak(report: dict, cfg: Config):
     """全过程最强的一天：返回 (district, day_dict) 或 None。"""
     best = None
@@ -108,9 +117,11 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
     else:
         # 标题按实际发送时刻（早/晚），时段判断只用于去重与补发
         slot_name = "早报" if run.hour < 14 else "晚报"
-        title = f"鸦岗降雨预报·{run.month:02d}-{run.day:02d}{slot_name}"
+        title = f"{cfg.message_title_prefix}·{run.month:02d}-{run.day:02d}{slot_name}"
 
     link = cfg.dashboard_url
+    order = _display_order(cfg)
+    horizons = cfg.general["rolling_hours"]
     html_parts: list[str] = []
     text_parts: list[str] = []
 
@@ -123,33 +134,10 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         text_parts.append("变化提醒：")
         text_parts.extend("  · " + e.get("text", "") for e in events[:5])
 
-    # 1/3/5 天累计
-    horizons = cfg.general["rolling_hours"]
-    html_parts.append(f"<p><b>1/3/5天累计（mm）</b><br>" + "<br>".join(
-        f"{d}　" + " / ".join(_fmt_mm(_rolling_map(report['districts'][d]).get(h, {}).get('mm'))
-                              for h in horizons)
-        for d in cfg.districts) + "</p>")
-    text_parts.append("1/3/5天累计（mm）：")
-    for d in cfg.districts:
-        rm = _rolling_map(report["districts"][d])
-        text_parts.append(f"  {d} " + " / ".join(_fmt_mm(rm.get(h, {}).get("mm")) for h in horizons))
-
-    # 逐日
-    daily_lines = []
-    for idx, date in enumerate(report["days"]):
-        cells = []
-        for d in cfg.districts:
-            day = report["districts"][d]["daily"][idx]
-            cells.append(f"{d} {_fmt_mm(day.get('mm'))}{day.get('level') or '-'}")
-        daily_lines.append(f"{day_label(date)}　" + "｜".join(cells))
-    html_parts.append("<p><b>逐日（水文日08–08）</b><br>" + "<br>".join(daily_lines) + "</p>")
-    text_parts.append("逐日（水文日08–08）：")
-    text_parts.extend("  " + line for line in daily_lines)
-
-    # 关注
+    # 关注提示（位置提前）
     advice = build_advice(report, cfg)
-    html_parts.append(f"<p><b>关注</b>：{html_mod.escape(advice)}</p>")
-    text_parts.append("关注：" + advice)
+    html_parts.append(f"<p><b>关注提示</b>：{html_mod.escape(advice)}</p>")
+    text_parts.append("关注提示：" + advice)
 
     # 官方预警
     warnings = report.get("warnings") or []
@@ -159,6 +147,28 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         warn_text = "暂无"
     html_parts.append(f"<p><b>官方预警</b>：{warn_text}</p>")
     text_parts.append("官方预警：" + (warn_text if warnings else "暂无"))
+
+    # 逐日预报（08–08时）
+    daily_lines = []
+    for idx, date in enumerate(report["days"]):
+        cells = []
+        for d in order:
+            day = report["districts"][d]["daily"][idx]
+            cells.append(f"{d} {_fmt_mm(day.get('mm'))}{day.get('level') or '-'}")
+        daily_lines.append(f"{day_label(date)}　" + "｜".join(cells))
+    html_parts.append("<p><b>逐日预报（08–08时）</b><br>" + "<br>".join(daily_lines) + "</p>")
+    text_parts.append("逐日预报（08–08时）：")
+    text_parts.extend("  " + line for line in daily_lines)
+
+    # 1/3/5 天累计（mm）
+    html_parts.append(f"<p><b>1/3/5天累计（mm）</b><br>" + "<br>".join(
+        f"{d}　" + " / ".join(_fmt_mm(_rolling_map(report['districts'][d]).get(h, {}).get('mm'))
+                              for h in horizons)
+        for d in order) + "</p>")
+    text_parts.append("1/3/5天累计（mm）：")
+    for d in order:
+        rm = _rolling_map(report["districts"][d])
+        text_parts.append(f"  {d} " + " / ".join(_fmt_mm(rm.get(h, {}).get("mm")) for h in horizons))
 
     # 数据来源与一致性
     source_bits = ["Open-Meteo(ECMWF/GFS/CMA)"]
@@ -209,9 +219,10 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
     run_label = f"{run.month:02d}-{run.day:02d} {run.hour:02d}:{run.minute:02d}"
     horizons = cfg.general["rolling_hours"]
     label_h = "/".join(f"{h//24}天" for h in horizons)
+    order = _display_order(cfg)
 
     cards = []
-    for district in cfg.districts:
+    for district in order:
         data = report["districts"][district]
         rm = _rolling_map(data)
         cells = "".join(
@@ -228,7 +239,7 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
     day_rows = []
     for idx, date in enumerate(report["days"]):
         cells = []
-        for district in cfg.districts:
+        for district in order:
             day = report["districts"][district]["daily"][idx]
             max_point = day.get("max_point") or {}
             tip = f' title="局部最大：{html_mod.escape(str(max_point.get("name") or ""))} {_fmt_mm(max_point.get("mm"))}mm"'
@@ -277,15 +288,17 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         base = html_mod.escape(cfg.repo_url)
         repo_link = (f'<br><a href="{base}/tree/main/data">历史数据下载（CSV / JSON，每小时自动更新）</a>'
                      f' · <a href="{base}">项目仓库</a>')
+    advice = build_advice(report, cfg)
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>鸦岗断面降雨预报监测</title>
+<title>{html_mod.escape(cfg.page_title)}{html_mod.escape(cfg.page_subtitle)}</title>
 <style>
 :root {{ color-scheme: light; }}
 body {{ font-family: system-ui,-apple-system,"Microsoft YaHei",sans-serif; margin:0; padding:16px;
         background:#f5f7fa; color:#1f2933; }}
-h1 {{ font-size:20px; margin:0 0 4px; }}
+h1 {{ font-size:20px; margin:0 0 2px; }}
+.subtitle {{ font-size:15px; font-weight:600; color:#52606d; margin:0 0 10px; }}
 h2 {{ font-size:15px; margin:24px 0 8px; }}
 .muted {{ color:#7b8794; font-size:12px; }}
 .wrap {{ max-width:960px; margin:0 auto; }}
@@ -311,20 +324,21 @@ li {{ margin:6px 0; font-size:13px; }}
 footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }}
 </style></head>
 <body><div class="wrap">
-<h1>鸦岗断面降雨预报监测</h1>
+<h1>{html_mod.escape(cfg.page_title)}</h1>
+<div class="subtitle">{html_mod.escape(cfg.page_subtitle)}</div>
 <p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(models)}</p>
-<h2>滚动累计（{label_h}，单位 mm）</h2>
-<div class="cards">{''.join(cards)}</div>
+<h2>关注提示</h2><ul><li>{html_mod.escape(advice)}</li></ul>
+<h2>官方预警</h2><ul>{warn_html}</ul>
 <h2>逐日预报（水文日 08:00–次日08:00，单位 mm）</h2>
-<table><thead><tr><th>日期</th>{''.join(f'<th>{html_mod.escape(d)}</th>' for d in cfg.districts)}</tr></thead>
+<table><thead><tr><th>日期</th>{''.join(f'<th>{html_mod.escape(d)}</th>' for d in order)}</tr></thead>
 <tbody>{''.join(day_rows)}</tbody></table>
 <p class="muted">单元格：区级面雨量（区内控制点中位数均值）与等级；鼠标悬停可看局部最大点。</p>
-<h2>官方预警</h2><ul>{warn_html}</ul>
+<h2>滚动累计（距当前 1/3/5天的累计量，单位 mm）</h2>
+<div class="cards">{''.join(cards)}</div>
 <h2>双源对比（Open-Meteo / 和风天气，单位 mm）</h2>
 <table><thead><tr><th>区</th>{''.join(f'<th>{day_label(d)}</th>' for d in report['days'])}</tr></thead>
 <tbody>{''.join(qw_rows) or '<tr><td colspan="6" class="muted">未配置和风天气，当前为单数据源</td></tr>'}</tbody></table>
 {err_html}
-<h2>关注提示</h2><ul><li>{html_mod.escape(build_advice(report, cfg))}</li></ul>
 <h2>控制点明细（滚动累计，单位 mm）</h2>
 <table><thead><tr><th>控制点</th><th>区</th><th>河段</th>{''.join(f'<th>{h//24}天</th>' for h in horizons)}</tr></thead>
 <tbody>{''.join(point_rows)}</tbody></table>
