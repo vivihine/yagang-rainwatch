@@ -18,7 +18,12 @@ def fake_cfg():
         alerts={"event_min_level": "中雨", "event_jump_mm": 10.0, "max_event_push_per_day": 4},
         general={"forecast_days": 5, "rolling_hours": [24, 72, 120]},
         districts=["从化", "花都", "白云"],
+        display_districts=["花都", "白云", "从化"],
+        page_title="鸦岗断面周边降雨预报-清积存提醒",
+        page_subtitle="（广州市环科院）",
+        message_title_prefix="鸦岗断面周边降雨预报",
         dashboard_url="https://example.github.io/yagang-rainwatch/",
+        repo_url="https://github.com/example/yagang-rainwatch",
     )
     cfg.summary = lambda: "测试配置"
     return cfg
@@ -90,11 +95,19 @@ class TestMessage(unittest.TestCase):
     def test_daily_message_contains_key_sections(self):
         cfg = fake_cfg()
         msg = render.make_message(fake_report(), cfg, kind="daily", daily_slot="08")
-        self.assertIn("鸦岗降雨预报", msg["title"])
-        for token in ("1/3/5天累计", "从化", "花都", "白云", "关注", "官方预警", "查看看板"):
+        self.assertIn("鸦岗断面周边降雨预报", msg["title"])
+        for token in ("1/3/5天累计", "从化", "花都", "白云", "关注提示", "官方预警", "查看看板"):
             self.assertIn(token, msg["html"], token)
         self.assertIn("30", msg["html"])
-        self.assertIn("1/3/5天累计", msg["text"])
+        # 板块顺序：关注提示 → 官方预警 → 逐日预报 → 1/3/5天累计
+        html = msg["html"]
+        self.assertLess(html.index("关注提示"), html.index("官方预警"))
+        self.assertLess(html.index("官方预警"), html.index("逐日预报（08–08时）"))
+        self.assertLess(html.index("逐日预报（08–08时）"), html.index("1/3/5天累计"))
+        # 区县顺序：花都 → 白云 → 从化
+        seg = msg["text"].split("逐日预报（08–08时）：")[1].split("1/3/5天累计")[0]
+        self.assertLess(seg.index("花都"), seg.index("白云"))
+        self.assertLess(seg.index("白云"), seg.index("从化"))
 
     def test_advice_mentions_upstream(self):
         cfg = fake_cfg()
@@ -109,6 +122,21 @@ class TestMessage(unittest.TestCase):
         msg = render.make_message(fake_report(), cfg, kind="event", events=[event])
         self.assertIn("鸦岗降雨提醒", msg["title"])
         self.assertIn("变化提醒", msg["html"])
+
+    def test_dashboard_layout(self):
+        cfg = fake_cfg()
+        html = render.render_dashboard(fake_report(), [], cfg)
+        # 标题两行
+        self.assertIn("鸦岗断面周边降雨预报-清积存提醒", html)
+        self.assertIn("（广州市环科院）", html)
+        # 板块顺序：关注提示 → 官方预警 → 逐日预报 → 滚动累计
+        self.assertLess(html.index("关注提示"), html.index("官方预警"))
+        self.assertLess(html.index("官方预警"), html.index("逐日预报（水文日"))
+        self.assertLess(html.index("逐日预报（水文日"), html.index("滚动累计（距当前"))
+        # 区县顺序：逐日表头 花都 → 白云 → 从化
+        head = html.split("逐日预报（水文日")[1].split("</tr>")[0]
+        self.assertLess(head.index("花都"), head.index("白云"))
+        self.assertLess(head.index("白云"), head.index("从化"))
 
 
 class TestEventDetection(unittest.TestCase):
