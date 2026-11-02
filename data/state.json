@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-11-03T01:23",
+  "last_run": "2026-11-03T02:00",
   "daily_reports": {
     "2026-10-31": {
       "manual": "2026-10-31T22:33"
@@ -27,13 +27,13 @@
     "花都": {
       "rolling24_mm": 1.2,
       "rolling24_level": "小雨",
-      "day1_mm": 1.0,
+      "day1_mm": 1.5,
       "day1_level": "小雨"
     },
     "白云": {
       "rolling24_mm": 1.9,
       "rolling24_level": "小雨",
-      "day1_mm": 1.6,
+      "day1_mm": 1.9,
       "day1_level": "小雨"
     }
   }
