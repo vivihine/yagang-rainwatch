@@ -1,5 +1,5 @@
 # ============================================================
-# 鸦岗断面降雨预报监测 · 配置文件
+# 鸦岗断面周边降雨预报-清积存提醒 · 配置文件
 # 修改配置不需要改代码。所有时间均为北京时间（Asia/Shanghai）。
 # 敏感信息（PushPlus token / 和风 Key / GitHub token）不写在这里，用环境变量或 .env.local。
 # ============================================================
@@ -19,6 +19,7 @@ repo_url = "https://github.com/vivihine/yagang-rainwatch"
 page_title = "鸦岗断面周边降雨预报-清积存提醒"
 page_subtitle = "（广州市环科院）"
 message_title_prefix = "鸦岗断面周边降雨预报"
+event_title_prefix = "鸦岗断面周边降雨提醒"
 # 看板/消息中区县的展示顺序（留空则按点位配置顺序）
 display_districts = ["花都", "白云", "从化"]
 
