@@ -22,6 +22,7 @@ def fake_cfg():
         page_title="鸦岗断面周边降雨预报-清积存提醒",
         page_subtitle="（广州市环科院）",
         message_title_prefix="鸦岗断面周边降雨预报",
+        event_title_prefix="鸦岗断面周边降雨提醒",
         dashboard_url="https://example.github.io/yagang-rainwatch/",
         repo_url="https://github.com/example/yagang-rainwatch",
     )
@@ -120,7 +121,7 @@ class TestMessage(unittest.TestCase):
         event = {"type": "upgrade", "key": "k1", "district": "从化",
                  "level": "大雨", "mm": 30.0, "text": "从化 未来24h预报等级升级为大雨（30mm）"}
         msg = render.make_message(fake_report(), cfg, kind="event", events=[event])
-        self.assertIn("鸦岗降雨提醒", msg["title"])
+        self.assertIn("鸦岗断面周边降雨提醒", msg["title"])
         self.assertIn("变化提醒", msg["html"])
 
     def test_dashboard_layout(self):
