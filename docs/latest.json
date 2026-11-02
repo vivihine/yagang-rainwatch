@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-02T17:00",
+  "run_time": "2026-11-02T18:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-03",
@@ -27,7 +27,7 @@
             "mm": 0.6,
             "level": "小雨"
           },
-          "qweather_mm": 1.8,
+          "qweather_mm": 2.5,
           "agreement": "一致"
         },
         {
@@ -41,7 +41,7 @@
             "mm": 0.9,
             "level": "小雨"
           },
-          "qweather_mm": 1.3,
+          "qweather_mm": 1.8,
           "agreement": "一致"
         },
         {
@@ -55,7 +55,7 @@
             "mm": 5.6,
             "level": "小雨"
           },
-          "qweather_mm": 3.1,
+          "qweather_mm": 4.9,
           "agreement": "一致"
         },
         {
@@ -69,7 +69,7 @@
             "mm": 24.3,
             "level": "中雨"
           },
-          "qweather_mm": 1.2,
+          "qweather_mm": 1.9,
           "agreement": "分歧"
         },
         {
@@ -83,33 +83,33 @@
             "mm": 0.1,
             "level": "小雨"
           },
-          "qweather_mm": 0.3,
+          "qweather_mm": 0.0,
           "agreement": "一致"
         }
       ],
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.4,
+          "mm": 0.5,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
-            "name": "太平场镇",
-            "mm": 0.5
+            "name": "流溪河山庄",
+            "mm": 0.6
           }
         },
         {
           "hours": 72,
-          "mm": 1.6,
+          "mm": 1.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "从化城区",
-            "mm": 1.8
+            "mm": 2.1
           }
         },
         {
@@ -136,7 +136,7 @@
           "mm": 24.3,
           "level": "中雨"
         },
-        "qweather_mm": 1.2,
+        "qweather_mm": 1.9,
         "agreement": "分歧"
       },
       "overall_concern": "关注"
@@ -159,7 +159,7 @@
             "mm": 3.1,
             "level": "小雨"
           },
-          "qweather_mm": 2.4,
+          "qweather_mm": 2.1,
           "agreement": "一致"
         },
         {
@@ -173,7 +173,7 @@
             "mm": 3.9,
             "level": "小雨"
           },
-          "qweather_mm": 3.7,
+          "qweather_mm": 3.5,
           "agreement": "一致"
         },
         {
@@ -187,7 +187,7 @@
             "mm": 3.9,
             "level": "小雨"
           },
-          "qweather_mm": 2.3,
+          "qweather_mm": 3.0,
           "agreement": "一致"
         },
         {
@@ -201,7 +201,7 @@
             "mm": 7.6,
             "level": "小雨"
           },
-          "qweather_mm": 2.0,
+          "qweather_mm": 0.9,
           "agreement": "一致"
         },
         {
@@ -215,14 +215,14 @@
             "mm": 0.2,
             "level": "小雨"
           },
-          "qweather_mm": 2.4,
+          "qweather_mm": 0.3,
           "agreement": "一致"
         }
       ],
       "rolling": [
         {
           "hours": 24,
-          "mm": 1.9,
+          "mm": 2.0,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
@@ -268,7 +268,7 @@
           "mm": 7.6,
           "level": "小雨"
         },
-        "qweather_mm": 2.0,
+        "qweather_mm": 0.9,
         "agreement": "一致"
       },
       "overall_concern": "无"
@@ -291,7 +291,7 @@
             "mm": 3.1,
             "level": "小雨"
           },
-          "qweather_mm": 1.9,
+          "qweather_mm": 1.3,
           "agreement": "一致"
         },
         {
@@ -305,7 +305,7 @@
             "mm": 4.2,
             "level": "小雨"
           },
-          "qweather_mm": 4.1,
+          "qweather_mm": 3.7,
           "agreement": "一致"
         },
         {
@@ -319,7 +319,7 @@
             "mm": 1.1,
             "level": "小雨"
           },
-          "qweather_mm": 2.4,
+          "qweather_mm": 4.0,
           "agreement": "一致"
         },
         {
@@ -333,7 +333,7 @@
             "mm": 6.0,
             "level": "小雨"
           },
-          "qweather_mm": 4.0,
+          "qweather_mm": 1.9,
           "agreement": "一致"
         },
         {
@@ -347,7 +347,7 @@
             "mm": 0.2,
             "level": "小雨"
           },
-          "qweather_mm": 2.3,
+          "qweather_mm": 0.7,
           "agreement": "一致"
         }
       ],
@@ -366,7 +366,7 @@
         },
         {
           "hours": 72,
-          "mm": 4.1,
+          "mm": 4.2,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -400,7 +400,7 @@
           "mm": 6.0,
           "level": "小雨"
         },
-        "qweather_mm": 4.0,
+        "qweather_mm": 1.9,
         "agreement": "一致"
       },
       "overall_concern": "无"
@@ -427,7 +427,7 @@
         "2026-11-07": "小雨"
       },
       "rolling": {
-        "24": 0.4,
+        "24": 0.6,
         "72": 1.5,
         "120": 32.4
       }
@@ -477,8 +477,8 @@
         "2026-11-07": "小雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 1.8,
+        "24": 0.3,
+        "72": 2.1,
         "120": 16.8
       }
     },
@@ -527,7 +527,7 @@
         "2026-11-07": "小雨"
       },
       "rolling": {
-        "24": 0.6,
+        "24": 0.9,
         "72": 4.3,
         "120": 13.8
       }
@@ -578,7 +578,7 @@
       },
       "rolling": {
         "24": 0.9,
-        "72": 1.6,
+        "72": 1.8,
         "120": 17.1
       }
     },
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-02T17:00",
+      "fetched_at": "2026-11-02T18:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-02T17:00",
+      "fetched_at": "2026-11-02T18:00",
       "errors": []
     }
   },
