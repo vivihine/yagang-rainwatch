@@ -18,6 +18,10 @@ GENERAL_DEFAULTS = {
     "docs_dir": "docs",
     "dashboard_url": "",
     "repo_url": "",
+    "page_title": "鸦岗断面周边降雨预报-清积存提醒",
+    "page_subtitle": "（广州市环科院）",
+    "message_title_prefix": "鸦岗断面周边降雨预报",
+    "display_districts": [],
 }
 
 OPENMETEO_DEFAULTS = {
@@ -189,6 +193,22 @@ class Config:
     @property
     def repo_url(self) -> str:
         return (self.general.get("repo_url") or os.environ.get("REPO_URL", "")).strip().rstrip("/")
+
+    @property
+    def page_title(self) -> str:
+        return str(self.general.get("page_title") or "鸦岗断面周边降雨预报-清积存提醒")
+
+    @property
+    def page_subtitle(self) -> str:
+        return str(self.general.get("page_subtitle") or "（广州市环科院）")
+
+    @property
+    def message_title_prefix(self) -> str:
+        return str(self.general.get("message_title_prefix") or "鸦岗断面周边降雨预报")
+
+    @property
+    def display_districts(self) -> list[str]:
+        return [str(d) for d in (self.general.get("display_districts") or [])]
 
     # ---------------- 路径 ----------------
     @property
