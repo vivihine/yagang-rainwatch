@@ -106,7 +106,7 @@ def _send_bark(cfg: Config, title: str, content_html: str) -> tuple[bool, dict]:
     payload = {
         "title": title[:100],
         "body": _html_to_text(content_html),
-        "group": "鸦岗降雨预报",
+        "group": "鸦岗断面周边降雨预报",
     }
     if cfg.dashboard_url:
         payload["url"] = cfg.dashboard_url
