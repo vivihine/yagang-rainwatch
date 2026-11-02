@@ -16,7 +16,7 @@ LOG = logging.getLogger("rainwatch")
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(prog="rainwatch", description="鸦岗断面降雨预报监测工具")
+    parser = argparse.ArgumentParser(prog="rainwatch", description="鸦岗断面周边降雨预报-清积存提醒工具")
     parser.add_argument("--config", default="config.toml", help="配置文件路径（默认 config.toml）")
     parser.add_argument("--dry-run", action="store_true", help="不推送微信，打印消息并生成本地看板")
     parser.add_argument("--no-push", action="store_true", help="判断推送但实际不发送")
@@ -40,8 +40,8 @@ def main(argv=None) -> int:
     LOG.info("rainwatch v%s 开始：%s | %s", __version__, iso_minute(now), cfg.summary())
 
     if args.test_push:
-        result = notifier.push(cfg, "鸦岗降雨预报·推送测试",
-                               "<p>推送通道测试成功，鸦岗降雨预报工具已就绪。</p>",
+        result = notifier.push(cfg, "鸦岗断面周边降雨预报·推送测试",
+                               "<p>推送通道测试成功，鸦岗断面周边降雨预报工具已就绪。</p>",
                                dry_run=args.dry_run or args.no_push)
         LOG.info("测试推送结果：%s", result)
         if result.get("ok") or result.get("reason") == "dry-run":
