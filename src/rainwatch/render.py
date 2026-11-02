@@ -113,7 +113,7 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
     events = events or []
     if kind == "event":
         first = events[0]["text"] if events else "预报变化"
-        title = "鸦岗降雨提醒：" + first[:22]
+        title = f"{cfg.event_title_prefix}：{first[:22]}"
     else:
         # 标题按实际发送时刻（早/晚），时段判断只用于去重与补发
         slot_name = "早报" if run.hour < 14 else "晚报"
@@ -248,7 +248,7 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
 
     qw_rows = []
     if report.get("sources", {}).get("qweather"):
-        for district in cfg.districts:
+        for district in order:
             cells = []
             for day in report["districts"][district]["daily"]:
                 qw = day.get("qweather_mm")
