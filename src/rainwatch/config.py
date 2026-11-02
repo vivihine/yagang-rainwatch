@@ -21,6 +21,7 @@ GENERAL_DEFAULTS = {
     "page_title": "鸦岗断面周边降雨预报-清积存提醒",
     "page_subtitle": "（广州市环科院）",
     "message_title_prefix": "鸦岗断面周边降雨预报",
+    "event_title_prefix": "鸦岗断面周边降雨提醒",
     "display_districts": [],
 }
 
@@ -205,6 +206,10 @@ class Config:
     @property
     def message_title_prefix(self) -> str:
         return str(self.general.get("message_title_prefix") or "鸦岗断面周边降雨预报")
+
+    @property
+    def event_title_prefix(self) -> str:
+        return str(self.general.get("event_title_prefix") or "鸦岗断面周边降雨提醒")
 
     @property
     def display_districts(self) -> list[str]:
