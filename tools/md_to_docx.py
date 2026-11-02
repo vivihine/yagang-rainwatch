@@ -145,7 +145,7 @@ def setup_document(title: str) -> Document:
     set_run_font(run, size=8)
     run.font.color.rgb = RGBColor(0x88, 0x88, 0x88)
     doc.core_properties.title = title
-    doc.core_properties.author = "鸦岗降雨预报项目"
+    doc.core_properties.author = "鸦岗断面周边降雨预报项目"
     return doc
 
 
