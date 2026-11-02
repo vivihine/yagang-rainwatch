@@ -1,4 +1,4 @@
-# 鸦岗断面降雨预报监测（yagang-rainwatch）
+# 鸦岗断面周边降雨预报-清积存提醒（yagang-rainwatch）
 
 面向鸦岗国考断面水环境监测的降雨预报小工具：**云端定时抓取未来1/3/5天降雨预报 → 按从化/花都/白云三区汇总分级 → 每天08:00/19:00微信日报 + 达阈值/官方预警时即时提醒 → 自动留档并生成网页看板。**
 
@@ -82,7 +82,7 @@ python -m rainwatch --dry-run             # 抓取 + 计算 + 生成看板 + 打
 > PushPlus 自 2024-08 起发消息必须**付费实名**（实名认证第三方接口收费，或开通一个月会员），不建议为这个工具花钱；改用 WxPusher，免费且支持微信接收。
 
 1. 微信扫码登录管理后台 <https://wxpusher.zjiecode.com/admin/>（首次会自动注册）
-2. 创建应用（名称随意，如“鸦岗降雨预报”），复制 **appToken**（`AT_` 开头）
+2. 创建应用（名称建议“广州市环科院”——它会显示在每条推送消息的第二行），复制 **appToken**（`AT_` 开头）
 3. 打开应用详情的关注二维码，用微信扫码关注（消息会到微信；也可装 WxPusher App 接收）
 4. 在“用户管理”里复制你的 **UID**（`UID_` 开头）
 5. 把 appToken 和 UID 填到本地 `.env.local`：`WXPUSHER_APP_TOKEN=AT_xxx`、`WXPUSHER_UID=UID_xxx`
@@ -111,7 +111,7 @@ WxPusher 支持多人订阅同一个应用，两种做法：
 3. 用英文逗号拼到 `WXPUSHER_UID`，如 `UID_aaa,UID_bbb`（本地 `.env.local` 改完运行 `python tools/github_deploy.py` 会自动同步到 GitHub Secrets）
 
 **方式 2：主题（推荐，人多且可自助）**
-1. WxPusher 后台 → 应用 → 主题 → 创建主题（如“鸦岗降雨预报”）
+1. WxPusher 后台 → 应用 → 主题 → 创建主题（如“鸦岗断面周边降雨预报”）
 2. 把主题的订阅二维码/链接发给同事，他们扫码订阅
 3. 把主题 ID 填到 `WXPUSHER_TOPIC_IDS`（多个用逗号分隔）；之后新同事自己扫码订阅即可，**不用再改配置**
 4. 改完运行 `python tools/github_deploy.py` 同步 Secrets
