@@ -38,7 +38,7 @@ EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "venv", "node_modules", ".pytest
 EXCLUDE_FILES = {".env.local"}
 EXCLUDE_SUFFIXES = {".pyc", ".pyo", ".log"}
 DEFAULT_REPO = "yagang-rainwatch"
-DESCRIPTION = "鸦岗断面降雨预报监测：Open-Meteo+和风天气/微信提醒/GitHub Actions 定时/GitHub Pages 看板"
+DESCRIPTION = "鸦岗断面周边降雨预报-清积存提醒：Open-Meteo+和风天气/微信提醒/GitHub Actions 定时/GitHub Pages 看板"
 
 
 def load_token() -> str:
