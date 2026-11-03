@@ -85,24 +85,68 @@ def _peak(report: dict, cfg: Config):
     return best[1], best[2]
 
 
+def _impact_sentence(district: str) -> str:
+    """按区域给出水环境影响的谨慎表述。"""
+    if district in ("花都", "白云"):
+        return "若降雨兑现，预计随后1–2天鸦岗断面来水增加，建议关注浊度/氨氮变化，必要时加密采样"
+    if district == "从化":
+        return "若降雨兑现，预计流溪河上游来水增加并在随后影响鸦岗断面，建议关注浊度/氨氮变化"
+    return "若降雨兑现，建议关注断面水质变化"
+
+
 def build_advice(report: dict, cfg: Config) -> str:
-    """根据过程峰值生成一句水环境关注建议。"""
-    peak = _peak(report, cfg)
-    if not peak:
-        return "预报数据不完整，请查看看板。"
-    district, day = peak
-    level = day.get("level") or "无雨"
-    mm = day.get("mm") or 0
-    if level_rank(cfg, level) < level_rank(cfg, "中雨"):
-        return f"未来{cfg.general['forecast_days']}天无中雨以上过程，维持常规监测。"
-    text = f"{district}{day_label(day['date'])}有{level}过程（{_fmt_mm(mm)}mm）"
-    if concern_rank(cfg, day.get("concern")) >= concern_rank(cfg, "高风险"):
-        text += "，量级达高风险关注线"
-    if district in ("从化", "花都"):
-        text += "，预计随后1–2天鸦岗断面来水增加，建议关注浊度/氨氮变化，必要时加密采样。"
-    else:
-        text += "，本地初雨冲刷/管网溢流风险上升，建议关注断面水质突变并择机采样。"
-    return text
+    """生成水环境关注提示。
+
+    - 可同时列出多项（不再只报最强的一天）；
+    - 按"花都 → 白云 → 从化"的上游优先级排列（花都/白云为鸦岗直接上游）；
+    - 语气随提前量、雨量大小与两源一致性调整：近期略明确，中远期用"可能/仅供参考"等谨慎措辞。
+    """
+    run = _run_dt(report)
+    days = report.get("days") or []
+    order = _display_order(cfg)
+    threshold = cfg.concern_mm[0] if cfg.concern_mm else 10.0
+
+    items: list[tuple[int, int, str, str, dict]] = []
+    for district in order:
+        data = report.get("districts", {}).get(district) or {}
+        for idx, date in enumerate(days):
+            if idx >= len(data.get("daily") or []):
+                break
+            day = data["daily"][idx]
+            mm = day.get("mm")
+            if mm is None or mm < threshold:
+                continue
+            items.append((order.index(district), idx, district, date, day))
+    items.sort(key=lambda it: (it[0], it[1]))
+
+    if not items:
+        return (f"未来{cfg.general['forecast_days']}天预报以小雨为主，无中雨以上过程"
+                "（中长期预报，临近可能调整），维持常规监测。")
+
+    lines = [f"未来{cfg.general['forecast_days']}天关注"
+             f"（按花都→白云→从化上游优先级排列；中长期预报存在不确定性）："]
+    for _, _, district, date, day in items[:4]:
+        lead = (datetime.strptime(date, "%Y-%m-%d").date() - run.date()).days
+        mm = float(day["mm"])
+        level = day.get("level") or "降雨"
+        if lead >= 4:
+            lead_txt = f"目前预报显示（提前{lead}天，不确定性较大），可能"
+        elif lead >= 2:
+            lead_txt = f"预报显示（提前{lead}天），可能"
+        else:
+            lead_txt = "预计"
+        text = f"{district} {day_label(date)}：{lead_txt}有{level}（约{_fmt_mm(mm)}mm），{_impact_sentence(district)}。"
+        agreement = str(day.get("agreement") or "")
+        spread = day.get("spread_mm") or 0
+        if agreement == "分歧":
+            text += "（该日两源分歧较大，仅供参考）"
+        elif spread and float(spread) > 10:
+            text += "（模式间差异较大，仅供参考）"
+        lines.append(text)
+    if len(items) > 4:
+        lines.append(f"（另有 {len(items) - 4} 项关注点，详见看板）")
+    lines.append("以上为中长期预报，临近时可能调整，请以最新推送和官方预警为准。")
+    return "\n".join(lines)
 
 
 # ---------------------------------------------------------------- 微信消息
@@ -134,10 +178,12 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         text_parts.append("变化提醒：")
         text_parts.extend("  · " + e.get("text", "") for e in events[:5])
 
-    # 关注提示（位置提前）
+    # 关注提示（位置提前，可多项分行显示）
     advice = build_advice(report, cfg)
-    html_parts.append(f"<p><b>关注提示</b>：{html_mod.escape(advice)}</p>")
-    text_parts.append("关注提示：" + advice)
+    html_parts.append("<p><b>关注提示</b><br>" +
+                      "<br>".join(html_mod.escape(line) for line in advice.split("\n")) + "</p>")
+    text_parts.append("关注提示：")
+    text_parts.extend("  " + line for line in advice.split("\n"))
 
     # 官方预警
     warnings = report.get("warnings") or []
@@ -177,7 +223,11 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
     agreement = report.get("agreement", {}).get("summary") or ""
     meta = "＋".join(source_bits) + (f"｜{agreement}" if agreement else "")
     if link:
-        html_parts.append(f'<p style="color:#666;font-size:12px">{meta}｜<a href="{html_mod.escape(link)}">查看看板</a></p>')
+        # 加时间戳参数，避免 App 内置浏览器/Pages CDN 缓存导致看到旧看板
+        sep = "&" if "?" in link else "?"
+        fresh_link = f"{link}{sep}v={run.strftime('%Y%m%d%H%M')}"
+        html_parts.append(f'<p style="color:#666;font-size:12px">{meta}｜'
+                          f'<a href="{html_mod.escape(fresh_link)}">查看看板</a></p>')
     else:
         html_parts.append(f'<p style="color:#666;font-size:12px">{meta}</p>')
     text_parts.append("数据：" + meta)
@@ -289,9 +339,13 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         repo_link = (f'<br><a href="{base}/tree/main/data">历史数据下载（CSV / JSON，每小时自动更新）</a>'
                      f' · <a href="{base}">项目仓库</a>')
     advice = build_advice(report, cfg)
+    advice_html = "".join(f"<li>{html_mod.escape(line)}</li>" for line in advice.split("\n"))
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>{html_mod.escape(cfg.page_title)}{html_mod.escape(cfg.page_subtitle)}</title>
 <style>
 :root {{ color-scheme: light; }}
@@ -327,7 +381,7 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <h1>{html_mod.escape(cfg.page_title)}</h1>
 <div class="subtitle">{html_mod.escape(cfg.page_subtitle)}</div>
 <p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(models)}</p>
-<h2>关注提示</h2><ul><li>{html_mod.escape(advice)}</li></ul>
+<h2>关注提示</h2><ul>{advice_html}</ul>
 <h2>官方预警</h2><ul>{warn_html}</ul>
 <h2>逐日预报（水文日 08:00–次日08:00，单位 mm）</h2>
 <table><thead><tr><th>日期</th>{''.join(f'<th>{html_mod.escape(d)}</th>' for d in order)}</tr></thead>
