@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import unittest
 from types import SimpleNamespace
 
@@ -115,6 +116,33 @@ class TestMessage(unittest.TestCase):
         advice = render.build_advice(fake_report(), cfg)
         self.assertIn("从化", advice)
         self.assertIn("来水增加", advice)
+        self.assertTrue(("可能" in advice) or ("预计" in advice))
+
+    def test_advice_multiple_items_and_priority(self):
+        cfg = fake_cfg()
+        report = copy.deepcopy(fake_report())
+        # 11-06：白云 12.7mm、从化 14.1mm，均为中雨，两项都应列出
+        report["districts"]["白云"]["daily"][4] = day("2026-11-06", 12.7, "中雨", "关注")
+        report["districts"]["从化"]["daily"][4] = day("2026-11-06", 14.1, "中雨", "关注")
+        advice = render.build_advice(report, cfg)
+        self.assertIn("12.7", advice)
+        self.assertIn("14.1", advice)
+        # 白云（直接上游）排在从化之前
+        self.assertLess(advice.index("白云"), advice.index("从化"))
+        # 提前 5 天 → 谨慎措辞 + 不确定性说明
+        self.assertIn("不确定性", advice)
+        self.assertIn("中长期预报", advice)
+
+    def test_message_link_has_cache_buster(self):
+        cfg = fake_cfg()
+        msg = render.make_message(fake_report(), cfg, kind="daily", daily_slot="08")
+        self.assertIn("?v=202611010805", msg["html"])
+
+    def test_dashboard_no_cache_meta(self):
+        cfg = fake_cfg()
+        html = render.render_dashboard(fake_report(), [], cfg)
+        self.assertIn("Cache-Control", html)
+        self.assertIn("no-cache", html)
 
     def test_event_message(self):
         cfg = fake_cfg()
