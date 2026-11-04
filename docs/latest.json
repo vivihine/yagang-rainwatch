@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-05T01:00",
+  "run_time": "2026-11-05T02:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-05",
@@ -90,38 +90,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 4.6,
+          "mm": 4.4,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "从化城区",
-            "mm": 7.0
+            "mm": 6.8
           }
         },
         {
           "hours": 72,
-          "mm": 8.4,
+          "mm": 8.2,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "从化城区",
-            "mm": 9.1
+            "mm": 8.9
           }
         },
         {
           "hours": 120,
-          "mm": 8.4,
+          "mm": 8.2,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "从化城区",
-            "mm": 9.1
+            "mm": 8.9
           }
         }
       ],
@@ -222,38 +222,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 5.5,
+          "mm": 5.6,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 10.3
+            "mm": 11.0
           }
         },
         {
           "hours": 72,
-          "mm": 11.5,
+          "mm": 11.3,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 17.8
+            "mm": 17.6
           }
         },
         {
           "hours": 120,
-          "mm": 11.9,
+          "mm": 11.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 18.7
+            "mm": 18.5
           }
         }
       ],
@@ -354,38 +354,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 2.8,
+          "mm": 2.7,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 4.1
+            "mm": 3.9
           }
         },
         {
           "hours": 72,
-          "mm": 7.4,
+          "mm": 7.3,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 10.2
+            "mm": 9.9
           }
         },
         {
           "hours": 120,
-          "mm": 7.6,
+          "mm": 7.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 10.2
+            "mm": 9.9
           }
         }
       ],
@@ -427,9 +427,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 4.1,
-        "72": 7.7,
-        "120": 7.7
+        "24": 3.7,
+        "72": 7.3,
+        "120": 7.3
       }
     },
     "CH-02": {
@@ -477,9 +477,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 7.0,
-        "72": 9.1,
-        "120": 9.1
+        "24": 6.8,
+        "72": 8.9,
+        "120": 8.9
       }
     },
     "HD-01": {
@@ -527,9 +527,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 10.3,
-        "72": 17.8,
-        "120": 18.7
+        "24": 11.0,
+        "72": 17.6,
+        "120": 18.5
       }
     },
     "HD-03": {
@@ -552,9 +552,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 4.1,
-        "72": 11.0,
-        "120": 11.3
+        "24": 3.7,
+        "72": 10.6,
+        "120": 10.9
       }
     },
     "BY-01": {
@@ -577,9 +577,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 4.1,
-        "72": 10.2,
-        "120": 10.2
+        "24": 3.9,
+        "72": 9.9,
+        "120": 9.9
       }
     },
     "BY-02": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-05T01:00",
+      "fetched_at": "2026-11-05T02:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-05T01:00",
+      "fetched_at": "2026-11-05T02:00",
       "errors": []
     }
   },
