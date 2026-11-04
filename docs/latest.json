@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-04T09:36",
+  "run_time": "2026-11-04T10:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-05",
@@ -234,14 +234,14 @@
         },
         {
           "hours": 72,
-          "mm": 12.8,
+          "mm": 12.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 15.0
+            "mm": 15.1
           }
         },
         {
@@ -503,7 +503,7 @@
       },
       "rolling": {
         "24": 11.4,
-        "72": 15.0,
+        "72": 15.1,
         "120": 15.3
       }
     },
@@ -528,7 +528,7 @@
       },
       "rolling": {
         "24": 8.1,
-        "72": 11.4,
+        "72": 11.5,
         "120": 11.7
       }
     },
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-04T09:36",
+      "fetched_at": "2026-11-04T10:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-04T09:36",
+      "fetched_at": "2026-11-04T10:00",
       "errors": []
     }
   },
