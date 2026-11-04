@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-05T02:12",
+  "run_time": "2026-11-05T02:59",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-05",
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-05T02:12",
+      "fetched_at": "2026-11-05T02:59",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-05T02:12",
+      "fetched_at": "2026-11-05T02:59",
       "errors": []
     }
   },
