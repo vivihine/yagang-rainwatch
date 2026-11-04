@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-05T03:00",
+  "run_time": "2026-11-05T04:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-05",
@@ -222,38 +222,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 5.3,
+          "mm": 5.4,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 10.6
+            "mm": 10.7
           }
         },
         {
           "hours": 72,
-          "mm": 11.1,
+          "mm": 11.0,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 17.4
+            "mm": 17.0
           }
         },
         {
           "hours": 120,
-          "mm": 11.5,
+          "mm": 11.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 18.3
+            "mm": 17.9
           }
         }
       ],
@@ -361,7 +361,7 @@
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 3.3
+            "mm": 3.4
           }
         },
         {
@@ -527,9 +527,9 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 10.6,
-        "72": 17.4,
-        "120": 18.3
+        "24": 10.7,
+        "72": 17.0,
+        "120": 17.9
       }
     },
     "HD-03": {
@@ -577,7 +577,7 @@
         "2026-11-09": "无雨"
       },
       "rolling": {
-        "24": 3.3,
+        "24": 3.4,
         "72": 10.2,
         "120": 10.5
       }
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-05T03:00",
+      "fetched_at": "2026-11-05T04:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-05T03:00",
+      "fetched_at": "2026-11-05T04:00",
       "errors": []
     }
   },
