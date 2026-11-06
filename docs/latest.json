@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-07T06:00",
+  "run_time": "2026-11-07T07:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-07",
@@ -229,31 +229,31 @@
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 1.2
+            "mm": 1.0
           }
         },
         {
           "hours": 72,
-          "mm": 2.0,
+          "mm": 1.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 2.7
+            "mm": 2.5
           }
         },
         {
           "hours": 120,
-          "mm": 2.0,
+          "mm": 1.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 2.7
+            "mm": 2.5
           }
         }
       ],
@@ -428,8 +428,8 @@
       },
       "rolling": {
         "24": 0.3,
-        "72": 0.7,
-        "120": 0.7
+        "72": 0.6,
+        "120": 0.6
       }
     },
     "CH-02": {
@@ -527,9 +527,9 @@
         "2026-11-11": "无雨"
       },
       "rolling": {
-        "24": 1.2,
-        "72": 2.7,
-        "120": 2.7
+        "24": 1.0,
+        "72": 2.5,
+        "120": 2.5
       }
     },
     "HD-03": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-07T06:00",
+      "fetched_at": "2026-11-07T07:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-07T06:00",
+      "fetched_at": "2026-11-07T07:00",
       "errors": []
     }
   },
