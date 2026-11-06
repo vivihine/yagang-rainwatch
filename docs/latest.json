@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-06T10:47",
+  "run_time": "2026-11-06T11:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-07",
@@ -102,26 +102,26 @@
         },
         {
           "hours": 72,
-          "mm": 9.9,
+          "mm": 9.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 10.7
+            "mm": 10.6
           }
         },
         {
           "hours": 120,
-          "mm": 9.9,
+          "mm": 9.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 10.7
+            "mm": 10.6
           }
         }
       ],
@@ -453,8 +453,8 @@
       },
       "rolling": {
         "24": 9.3,
-        "72": 10.7,
-        "120": 10.7
+        "72": 10.6,
+        "120": 10.6
       }
     },
     "CH-03": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-06T10:47",
+      "fetched_at": "2026-11-06T11:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-06T10:47",
+      "fetched_at": "2026-11-06T11:00",
       "errors": []
     }
   },
