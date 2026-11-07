@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-11-08T03:09",
+  "last_run": "2026-11-08T04:00",
   "daily_reports": {
     "2026-10-31": {
       "manual": "2026-10-31T22:33"
@@ -50,21 +50,21 @@
   ],
   "prev": {
     "从化": {
-      "rolling24_mm": 3.6,
+      "rolling24_mm": 2.1,
       "rolling24_level": "小雨",
-      "day1_mm": 3.6,
+      "day1_mm": 2.1,
       "day1_level": "小雨"
     },
     "花都": {
-      "rolling24_mm": 3.4,
+      "rolling24_mm": 1.2,
       "rolling24_level": "小雨",
-      "day1_mm": 3.5,
+      "day1_mm": 1.2,
       "day1_level": "小雨"
     },
     "白云": {
-      "rolling24_mm": 4.2,
+      "rolling24_mm": 2.8,
       "rolling24_level": "小雨",
-      "day1_mm": 4.2,
+      "day1_mm": 2.9,
       "day1_level": "小雨"
     }
   }
