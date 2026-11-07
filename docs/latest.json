@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-07T09:24",
+  "run_time": "2026-11-07T10:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-08",
@@ -234,26 +234,26 @@
         },
         {
           "hours": 72,
-          "mm": 3.7,
+          "mm": 3.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 6.6
+            "mm": 5.9
           }
         },
         {
           "hours": 120,
-          "mm": 3.7,
+          "mm": 3.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 6.6
+            "mm": 5.9
           }
         }
       ],
@@ -366,26 +366,26 @@
         },
         {
           "hours": 72,
-          "mm": 2.8,
+          "mm": 2.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 3.3
+            "mm": 2.7
           }
         },
         {
           "hours": 120,
-          "mm": 2.8,
+          "mm": 2.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 3.3
+            "mm": 2.7
           }
         }
       ],
@@ -503,8 +503,8 @@
       },
       "rolling": {
         "24": 0.9,
-        "72": 6.6,
-        "120": 6.6
+        "72": 5.9,
+        "120": 5.9
       }
     },
     "HD-02": {
@@ -578,8 +578,8 @@
       },
       "rolling": {
         "24": 0.9,
-        "72": 1.8,
-        "120": 1.8
+        "72": 1.7,
+        "120": 1.7
       }
     },
     "BY-02": {
@@ -603,8 +603,8 @@
       },
       "rolling": {
         "24": 0.9,
-        "72": 3.3,
-        "120": 3.3
+        "72": 2.7,
+        "120": 2.7
       }
     },
     "BY-03": {
@@ -628,15 +628,15 @@
       },
       "rolling": {
         "24": 0.9,
-        "72": 3.3,
-        "120": 3.3
+        "72": 2.7,
+        "120": 2.7
       }
     }
   },
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-07T09:24",
+      "fetched_at": "2026-11-07T10:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-07T09:24",
+      "fetched_at": "2026-11-07T10:00",
       "errors": []
     }
   },
