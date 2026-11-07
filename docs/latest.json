@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-08T05:04",
+  "run_time": "2026-11-08T06:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-08",
@@ -354,14 +354,14 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 2.8,
+          "mm": 2.9,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 2.9
+            "mm": 3.0
           }
         },
         {
@@ -602,7 +602,7 @@
         "2026-11-12": "无雨"
       },
       "rolling": {
-        "24": 2.9,
+        "24": 3.0,
         "72": 3.0,
         "120": 3.0
       }
@@ -627,7 +627,7 @@
         "2026-11-12": "无雨"
       },
       "rolling": {
-        "24": 2.9,
+        "24": 3.0,
         "72": 3.0,
         "120": 3.0
       }
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-08T05:04",
+      "fetched_at": "2026-11-08T06:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-08T05:04",
+      "fetched_at": "2026-11-08T06:00",
       "errors": []
     }
   },
