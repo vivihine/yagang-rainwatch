@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-08T17:00",
+  "run_time": "2026-11-08T18:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-09",
@@ -90,38 +90,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.7,
+          "mm": 0.6,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 1.0
+            "mm": 0.9
           }
         },
         {
           "hours": 72,
-          "mm": 0.7,
+          "mm": 0.6,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 1.0
+            "mm": 0.9
           }
         },
         {
           "hours": 120,
-          "mm": 0.7,
+          "mm": 0.6,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 1.0
+            "mm": 0.9
           }
         }
       ],
@@ -222,7 +222,7 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.2,
+          "mm": 0.1,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
@@ -234,7 +234,7 @@
         },
         {
           "hours": 72,
-          "mm": 0.2,
+          "mm": 0.1,
           "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
@@ -246,7 +246,7 @@
         },
         {
           "hours": 120,
-          "mm": 0.2,
+          "mm": 0.1,
           "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -452,9 +452,9 @@
         "2026-11-13": "小雨"
       },
       "rolling": {
-        "24": 1.0,
-        "72": 1.0,
-        "120": 1.0
+        "24": 0.9,
+        "72": 0.9,
+        "120": 0.9
       }
     },
     "CH-03": {
@@ -552,9 +552,9 @@
         "2026-11-13": "小雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 0.2,
-        "120": 0.2
+        "24": 0.0,
+        "72": 0.0,
+        "120": 0.0
       }
     },
     "BY-01": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-08T17:00",
+      "fetched_at": "2026-11-08T18:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-08T17:00",
+      "fetched_at": "2026-11-08T18:00",
       "errors": []
     }
   },
