@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-09T03:55",
+  "run_time": "2026-11-09T04:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-09",
@@ -246,14 +246,14 @@
         },
         {
           "hours": 120,
-          "mm": 0.9,
+          "mm": 1.0,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
-            "name": "大坳",
-            "mm": 0.9
+            "name": "花都城区",
+            "mm": 1.1
           }
         }
       ],
@@ -378,14 +378,14 @@
         },
         {
           "hours": 120,
-          "mm": 0.7,
+          "mm": 0.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
           "concern": "关注",
           "max_point": {
             "name": "李溪坝",
-            "mm": 0.9
+            "mm": 1.1
           }
         }
       ],
@@ -554,7 +554,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.9
+        "120": 1.1
       }
     },
     "BY-01": {
@@ -579,7 +579,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.9
+        "120": 1.1
       }
     },
     "BY-02": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-09T03:55",
+      "fetched_at": "2026-11-09T04:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-09T03:55",
+      "fetched_at": "2026-11-09T04:00",
       "errors": []
     }
   },
