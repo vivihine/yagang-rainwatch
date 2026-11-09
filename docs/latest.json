@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-09T20:00",
+  "run_time": "2026-11-09T21:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-10",
@@ -63,7 +63,7 @@
           "mm": 11.9,
           "level": "中雨",
           "concern": "关注",
-          "spread_mm": 15.3,
+          "spread_mm": 14.6,
           "max_point": {
             "name": "太平场镇",
             "mm": 15.9,
@@ -195,7 +195,7 @@
           "mm": 19.5,
           "level": "中雨",
           "concern": "关注",
-          "spread_mm": 22.1,
+          "spread_mm": 19.7,
           "max_point": {
             "name": "花都城区",
             "mm": 23.5,
@@ -246,7 +246,7 @@
         },
         {
           "hours": 120,
-          "mm": 31.5,
+          "mm": 31.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
@@ -262,7 +262,7 @@
         "mm": 19.5,
         "level": "中雨",
         "concern": "关注",
-        "spread_mm": 22.1,
+        "spread_mm": 19.7,
         "max_point": {
           "name": "花都城区",
           "mm": 23.5,
@@ -327,7 +327,7 @@
           "mm": 20.6,
           "level": "中雨",
           "concern": "关注",
-          "spread_mm": 20.9,
+          "spread_mm": 21.5,
           "max_point": {
             "name": "李溪坝",
             "mm": 23.5,
@@ -394,7 +394,7 @@
         "mm": 20.6,
         "level": "中雨",
         "concern": "关注",
-        "spread_mm": 20.9,
+        "spread_mm": 21.5,
         "max_point": {
           "name": "李溪坝",
           "mm": 23.5,
@@ -529,7 +529,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 22.2
+        "120": 23.4
       }
     },
     "HD-03": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-09T20:00",
+      "fetched_at": "2026-11-09T21:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-09T20:00",
+      "fetched_at": "2026-11-09T21:00",
       "errors": []
     }
   },
