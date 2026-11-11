@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-11T17:00",
+  "run_time": "2026-11-11T17:57",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-12",
@@ -201,7 +201,7 @@
             "mm": 3.7,
             "level": "小雨"
           },
-          "qweather_mm": 1.1,
+          "qweather_mm": 0.3,
           "agreement": "一致"
         },
         {
@@ -215,7 +215,7 @@
             "mm": 6.0,
             "level": "小雨"
           },
-          "qweather_mm": 3.7,
+          "qweather_mm": 5.8,
           "agreement": "一致"
         }
       ],
@@ -333,7 +333,7 @@
             "mm": 3.8,
             "level": "小雨"
           },
-          "qweather_mm": 1.5,
+          "qweather_mm": 0.6,
           "agreement": "一致"
         },
         {
@@ -347,7 +347,7 @@
             "mm": 6.0,
             "level": "小雨"
           },
-          "qweather_mm": 2.0,
+          "qweather_mm": 3.7,
           "agreement": "一致"
         }
       ],
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-11T17:00",
+      "fetched_at": "2026-11-11T17:57",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-11T17:00",
+      "fetched_at": "2026-11-11T17:57",
       "errors": []
     }
   },
