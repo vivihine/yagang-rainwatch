@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-11T16:00",
+  "run_time": "2026-11-11T17:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-12",
@@ -41,7 +41,7 @@
             "mm": 29.9,
             "level": "大雨"
           },
-          "qweather_mm": 0.8,
+          "qweather_mm": 0.4,
           "agreement": "分歧"
         },
         {
@@ -55,7 +55,7 @@
             "mm": 2.0,
             "level": "小雨"
           },
-          "qweather_mm": 1.9,
+          "qweather_mm": 0.9,
           "agreement": "一致"
         },
         {
@@ -83,7 +83,7 @@
             "mm": 6.2,
             "level": "小雨"
           },
-          "qweather_mm": 4.1,
+          "qweather_mm": 0.2,
           "agreement": "一致"
         }
       ],
@@ -114,14 +114,14 @@
         },
         {
           "hours": 120,
-          "mm": 30.2,
+          "mm": 30.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
           "concern": "关注",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 37.4
+            "mm": 37.5
           }
         }
       ],
@@ -136,7 +136,7 @@
           "mm": 29.9,
           "level": "大雨"
         },
-        "qweather_mm": 0.8,
+        "qweather_mm": 0.4,
         "agreement": "分歧"
       },
       "overall_concern": "关注"
@@ -173,7 +173,7 @@
             "mm": 27.0,
             "level": "大雨"
           },
-          "qweather_mm": 2.3,
+          "qweather_mm": 5.5,
           "agreement": "分歧"
         },
         {
@@ -268,7 +268,7 @@
           "mm": 27.0,
           "level": "大雨"
         },
-        "qweather_mm": 2.3,
+        "qweather_mm": 5.5,
         "agreement": "分歧"
       },
       "overall_concern": "关注"
@@ -305,7 +305,7 @@
             "mm": 27.0,
             "level": "大雨"
           },
-          "qweather_mm": 1.4,
+          "qweather_mm": 6.0,
           "agreement": "分歧"
         },
         {
@@ -400,7 +400,7 @@
           "mm": 27.0,
           "level": "大雨"
         },
-        "qweather_mm": 1.4,
+        "qweather_mm": 6.0,
         "agreement": "分歧"
       },
       "overall_concern": "显著"
@@ -429,7 +429,7 @@
       "rolling": {
         "24": 0.0,
         "72": 32.4,
-        "120": 37.4
+        "120": 37.5
       }
     },
     "CH-02": {
@@ -454,7 +454,7 @@
       "rolling": {
         "24": 0.0,
         "72": 24.8,
-        "120": 31.5
+        "120": 31.6
       }
     },
     "CH-03": {
@@ -479,7 +479,7 @@
       "rolling": {
         "24": 0.0,
         "72": 19.0,
-        "120": 21.8
+        "120": 22.0
       }
     },
     "HD-01": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-11T16:00",
+      "fetched_at": "2026-11-11T17:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-11T16:00",
+      "fetched_at": "2026-11-11T17:00",
       "errors": []
     }
   },
