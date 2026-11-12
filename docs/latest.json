@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-12T10:00",
+  "run_time": "2026-11-12T11:00",
   "timezone": "Asia/Shanghai",
   "days": [
     "2026-11-13",
@@ -554,7 +554,7 @@
       "rolling": {
         "24": 0.0,
         "72": 13.2,
-        "120": 25.6
+        "120": 25.7
       }
     },
     "BY-01": {
@@ -636,7 +636,7 @@
   "warnings": [],
   "sources": {
     "openmeteo": {
-      "fetched_at": "2026-11-12T10:00",
+      "fetched_at": "2026-11-12T11:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -644,7 +644,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-12T10:00",
+      "fetched_at": "2026-11-12T11:00",
       "errors": []
     }
   },
