@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-11-13T05:13",
+  "last_run": "2026-11-13T06:00",
   "daily_reports": {
     "2026-11-05": {
       "08": "2026-11-05T08:00",
@@ -37,7 +37,7 @@
   },
   "event_counts": {
     "2026-11-12": 1,
-    "2026-11-13": 1
+    "2026-11-13": 2
   },
   "pushed_events": [
     {
@@ -51,23 +51,27 @@
     {
       "key": "upgrade|白云|中雨|2026-11-13",
       "ts": "2026-11-13T02:00"
+    },
+    {
+      "key": "upgrade|花都|大雨|2026-11-13",
+      "ts": "2026-11-13T06:00"
     }
   ],
   "prev": {
     "从化": {
-      "rolling24_mm": 19.6,
+      "rolling24_mm": 22.8,
       "rolling24_level": "中雨",
       "day1_mm": 30.9,
       "day1_level": "大雨"
     },
     "花都": {
-      "rolling24_mm": 21.5,
-      "rolling24_level": "中雨",
+      "rolling24_mm": 26.9,
+      "rolling24_level": "大雨",
       "day1_mm": 34.3,
       "day1_level": "大雨"
     },
     "白云": {
-      "rolling24_mm": 13.9,
+      "rolling24_mm": 17.9,
       "rolling24_level": "中雨",
       "day1_mm": 26.0,
       "day1_level": "大雨"
