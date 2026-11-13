@@ -70,6 +70,25 @@ def _pushed_keys(state: dict) -> set[str]:
     return {str(item.get("key")) for item in state.get("pushed_events", []) if item.get("key")}
 
 
+_OFFICIAL_ORDER = ["无雨", "小雨", "中雨", "大雨", "暴雨", "大暴雨", "特大暴雨"]
+
+
+def _official_rank(level: str | None) -> int:
+    try:
+        return _OFFICIAL_ORDER.index(level or "无雨")
+    except ValueError:
+        return 0
+
+
+def _official_max(report: dict, district: str) -> str | None:
+    """未来 48h 内中国天气网官方等级的最大值。"""
+    official = (report.get("chinawx") or {}).get("districts") or {}
+    days = (report.get("days") or [])[:2]
+    levels = [(official.get(district, {}).get(date) or {}).get("level") for date in days]
+    levels = [level for level in levels if level]
+    return max(levels, key=_official_rank) if levels else None
+
+
 def snapshot(report: dict) -> dict:
     """记录本次预报的关键值，供下一次运行判断“是否升级”。"""
     out: dict = {}
@@ -81,6 +100,7 @@ def snapshot(report: dict) -> dict:
             "rolling24_level": r24.get("level") if r24 else None,
             "day1_mm": day1.get("mm") if day1 else None,
             "day1_level": day1.get("level") if day1 else None,
+            "official_level": _official_max(report, district),
         }
     return out
 
@@ -127,6 +147,37 @@ def detect_events(cfg: Config, report: dict, state: dict, now: datetime) -> list
             "mm": r24.get("mm"),
             "hours": 24,
             "text": f"{district} 未来24h预报{reason}为{r24.get('level')}（{r24.get('mm')}mm）",
+        })
+
+    # 中国天气网官方等级：任一区未来 48h 报中雨以上、且较上次升级 → 事件（防漏报兜底）
+    official = (report.get("chinawx") or {}).get("districts") or {}
+    for district, data in report.get("districts", {}).items():
+        official_days = []
+        for date in (report.get("days") or [])[:2]:
+            off = official.get(district, {}).get(date) or {}
+            level = off.get("level")
+            if level and level_rank(cfg, level) >= threshold_rank:
+                official_days.append((date, level, off.get("text")))
+        if not official_days:
+            continue
+        date, level, _text = max(official_days, key=lambda item: level_rank(cfg, item[1]))
+        prev_info = prev.get(district) or {}
+        prev_official = prev_info.get("official_level") or "无雨"
+        if level_rank(cfg, level) <= level_rank(cfg, prev_official):
+            continue
+        key = f"official|{district}|{level}|{date}"
+        if key in pushed:
+            continue
+        day_row = next((d for d in data.get("daily", []) if d.get("date") == date), None)
+        mm = day_row.get("mm") if day_row else None
+        mm_txt = f"（主源 {mm:g}mm）" if isinstance(mm, (int, float)) else ""
+        events.append({
+            "type": "official",
+            "key": key,
+            "district": district,
+            "level": level,
+            "mm": mm,
+            "text": f"中国天气网官方预报：{district} {date[5:]} {level}{mm_txt}",
         })
 
     for warning in report.get("warnings") or []:
