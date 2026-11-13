@@ -37,6 +37,11 @@ QWEATHER_DEFAULTS = {
     "warning_levels": ["黄色", "橙色", "红色"],
 }
 
+CHINAWX_DEFAULTS = {
+    "enabled": True,
+    "city_ids": {"从化": "101280103", "花都": "101280105", "白云": "101280110"},
+}
+
 ALERT_DEFAULTS = {
     "event_min_level": "中雨",
     "event_jump_mm": 10.0,
@@ -79,6 +84,7 @@ class Config:
 
         self.om = _merge(OPENMETEO_DEFAULTS, raw.get("sources", {}).get("openmeteo"))
         self.qw = _merge(QWEATHER_DEFAULTS, raw.get("sources", {}).get("qweather"))
+        self.chinawx = _merge(CHINAWX_DEFAULTS, raw.get("sources", {}).get("chinawx"))
         self.primary = str(raw.get("sources", {}).get("primary", "openmeteo")).strip().lower()
 
         th = raw.get("thresholds", {})
@@ -198,8 +204,12 @@ class Config:
 
     @property
     def primary_source(self) -> str:
-        """主数据源：qweather（和风，默认）或 openmeteo。"""
+        """主数据源：openmeteo（默认）或 qweather。"""
         return self.primary if self.primary in ("openmeteo", "qweather") else "openmeteo"
+
+    @property
+    def chinawx_enabled(self) -> bool:
+        return bool(self.chinawx.get("enabled", True)) and bool(self.chinawx.get("city_ids"))
 
     @property
     def page_title(self) -> str:
