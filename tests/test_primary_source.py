@@ -122,7 +122,7 @@ class TestRenderPrimary(unittest.TestCase):
         self.assertIn("和风天气（主）", msg["html"])
         self.assertIn("Open-Meteo", msg["html"])
         html = render.render_dashboard(report, [], cfg)
-        self.assertIn("双源对比（和风天气 / Open-Meteo", html)
+        self.assertIn("多源对比（和风天气（主）/ Open-Meteo（校验）", html)
         self.assertIn("主源为和风天气", html)
 
 
