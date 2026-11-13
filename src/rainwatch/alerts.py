@@ -20,6 +20,7 @@ STATE_DEFAULTS = {
     "event_counts": {},    # {"2026-11-01": 2}
     "pushed_events": [],   # [{"key": "...", "ts": "..."}]
     "prev": {},            # {district: {rolling24_mm, rolling24_level, day1_mm, day1_level}}
+    "last_failure_notify": None,  # 运行失败提醒的日期（每天最多一次）
 }
 
 
