@@ -34,7 +34,7 @@ def _build_url(cfg: Config) -> str:
     return f"{BASE_URL}?latitude={lats}&longitude={lons}&{params}"
 
 
-def fetch(cfg: Config, now: datetime) -> dict:
+def fetch(cfg: Config, now: datetime, retries: int = 4) -> dict:
     """抓取所有点位的逐小时降水，返回按点位/模式组织的序列。
 
     返回结构：
@@ -47,7 +47,7 @@ def fetch(cfg: Config, now: datetime) -> dict:
 
     url = _build_url(cfg)
     LOG.info("Open-Meteo 请求：%d 个点位 × %d 个模式", len(cfg.points), len(cfg.om["models"]))
-    payload = fetch_json(url, timeout=45, retries=4)
+    payload = fetch_json(url, timeout=45, retries=retries)
 
     locations = payload if isinstance(payload, list) else [payload]
     if len(locations) != len(cfg.points):
