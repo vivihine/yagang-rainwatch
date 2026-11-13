@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-14T06:00",
+  "run_time": "2026-11-14T06:49",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -193,8 +193,8 @@
           },
           "peer_mm": 0.0,
           "agreement": "一致",
-          "official_level": "小雨",
-          "official_text": "晴转小雨"
+          "official_level": "无雨",
+          "official_text": "晴转多云"
         },
         {
           "date": "2026-11-16",
@@ -210,7 +210,7 @@
           "peer_mm": 1.0,
           "agreement": "一致",
           "official_level": "小雨",
-          "official_text": "小雨"
+          "official_text": "多云转小雨"
         },
         {
           "date": "2026-11-17",
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-14T06:00",
+    "fetched_at": "2026-11-14T06:49",
     "errors": [],
     "districts": {
       "从化": {
@@ -710,20 +710,16 @@
         }
       },
       "花都": {
-        "2026-11-13": {
-          "text": "大雨",
-          "level": "大雨"
-        },
         "2026-11-14": {
           "text": "晴",
           "level": "无雨"
         },
         "2026-11-15": {
-          "text": "晴转小雨",
-          "level": "小雨"
+          "text": "晴转多云",
+          "level": "无雨"
         },
         "2026-11-16": {
-          "text": "小雨",
+          "text": "多云转小雨",
           "level": "小雨"
         },
         "2026-11-17": {
@@ -735,6 +731,10 @@
           "level": "小雨"
         },
         "2026-11-19": {
+          "text": "多云",
+          "level": "无雨"
+        },
+        "2026-11-20": {
           "text": "多云",
           "level": "无雨"
         }
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-14T06:00",
+      "fetched_at": "2026-11-14T06:49",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-14T06:00",
+      "fetched_at": "2026-11-14T06:49",
       "errors": []
     }
   },
