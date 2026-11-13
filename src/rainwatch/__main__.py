@@ -9,7 +9,7 @@ from datetime import datetime
 
 from . import __version__, alerts, compute, notifier, render
 from .config import Config
-from .sources import openmeteo, qweather
+from .sources import chinawx, openmeteo, qweather
 from .util import iso_minute, now_local
 
 LOG = logging.getLogger("rainwatch")
@@ -73,7 +73,7 @@ def main(argv=None) -> int:
     if args.failure_notify:
         return _notify_failure(cfg, now, dry_run=args.dry_run or args.no_push)
 
-    # 1) 数据源：先取主源；校验源失败不阻断（主源为和风时 Open-Meteo 仅作校验）
+    # 1) 数据源：先取主源；校验源/官方等级源失败不阻断（主源为和风时 Open-Meteo 仅作校验）
     qw_data = None
     if cfg.qweather_enabled:
         try:
@@ -94,9 +94,18 @@ def main(argv=None) -> int:
         else:
             raise
 
+    # 中国天气网官方等级（仅文本，失败不影响主流程）
+    chinawx_data = None
+    if cfg.chinawx_enabled:
+        try:
+            chinawx_data = chinawx.fetch(cfg, now)
+        except Exception as exc:  # noqa: BLE001
+            LOG.warning("中国天气网官方预报获取失败：%s", exc)
+
     # 2) 计算
-    report = compute.build_report(cfg, now, om_data, qw_data)
-    LOG.info("计算完成：%s", report["agreement"].get("summary"))
+    report = compute.build_report(cfg, now, om_data, qw_data, chinawx_data)
+    LOG.info("计算完成：%s；官方等级校验 %d 项",
+             report["agreement"].get("summary"), len(report.get("official_events") or []))
 
     # 3) 提醒判断
     state = alerts.load_state(cfg.state_path)
