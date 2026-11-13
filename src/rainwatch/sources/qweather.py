@@ -36,7 +36,7 @@ def _api(cfg: Config, path: str, params: dict | None = None) -> dict:
     url = f"https://{cfg.qweather_host}{path}"
     if query:
         url += ("&" if "?" in path else "?") + query
-    return fetch_json(url, timeout=30, retries=2, headers={"X-QW-Api-Key": cfg.qweather_key})
+    return fetch_json(url, timeout=40, retries=3, headers={"X-QW-Api-Key": cfg.qweather_key})
 
 
 def _fetch_daily(cfg: Config) -> tuple[dict, list[str]]:
