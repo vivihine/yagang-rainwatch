@@ -190,10 +190,24 @@ def _agreement(cfg: Config, value: float, peer: float | None) -> str:
     return "接近"
 
 
-def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | None) -> dict:
+def _official_map(chinawx: dict | None) -> dict[str, dict]:
+    """{district: {date: {"text": ..., "level": ...}}}（中国天气网官方等级）。"""
+    out: dict[str, dict] = {}
+    if not chinawx:
+        return out
+    for district, dates in (chinawx.get("districts") or {}).items():
+        out[str(district)] = {str(d): dict(v) for d, v in (dates or {}).items()}
+    return out
+
+
+def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | None,
+                 chinawx: dict | None = None) -> dict:
     """组装包含展示所需全部字段的报告字典（JSON 可序列化）。"""
     days = report_days(now, cfg.general["forecast_days"])
     horizons = cfg.general["rolling_hours"]
+    official = _official_map(chinawx)
+    official_events: list[dict] = []
+    official_divergence: list[dict] = []
 
     # Open-Meteo（逐小时）
     om_daily: dict[str, dict] = {}
@@ -273,9 +287,17 @@ def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | N
             items = [(pid, primary_daily[pid][date]) for pid in pids
                      if primary_daily[pid].get(date) and primary_daily[pid][date]["mm"] is not None]
             if not items:
+                off = official.get(district, {}).get(date.isoformat()) or {}
+                official_level = off.get("level")
+                if official_level and level_rank(cfg, official_level) >= level_rank(cfg, "中雨"):
+                    official_events.append({"district": district, "date": date.isoformat(),
+                                            "level": official_level,
+                                            "text": off.get("text") or "", "primary_mm": None})
                 daily_out.append({"date": date.isoformat(), "mm": None, "level": None,
                                   "concern": None, "spread_mm": None, "max_point": None,
-                                  "peer_mm": None, "agreement": "无数据"})
+                                  "peer_mm": None, "agreement": "无数据",
+                                  "official_level": official_level,
+                                  "official_text": off.get("text")})
                 continue
             mm = round(sum(it[1]["mm"] for it in items) / len(items), 1)
             spread = round(sum(it[1]["spread"] for it in items) / len(items), 1)
@@ -289,6 +311,17 @@ def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | N
             peer_mm = round(sum(peer_vals) / len(peer_vals), 1) if peer_vals else None
             agreement = _agreement(cfg, mm, peer_mm)
             agreement_counts[agreement] = agreement_counts.get(agreement, 0) + 1
+            off = official.get(district, {}).get(date.isoformat()) or {}
+            official_level = off.get("level")
+            official_text = off.get("text")
+            if official_level and level_rank(cfg, official_level) >= level_rank(cfg, "中雨"):
+                official_events.append({"district": district, "date": date.isoformat(),
+                                        "level": official_level, "text": official_text or "",
+                                        "primary_mm": mm})
+                if mm < 10.0:
+                    official_divergence.append({"district": district, "date": date.isoformat(),
+                                                "level": official_level,
+                                                "text": official_text or "", "primary_mm": mm})
             daily_out.append({
                 "date": date.isoformat(),
                 "mm": mm,
@@ -299,6 +332,8 @@ def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | N
                               "level": level_of(cfg, max_val["mm"])},
                 "peer_mm": peer_mm,
                 "agreement": agreement,
+                "official_level": official_level,
+                "official_text": official_text,
             })
 
         rolling_out: list[dict] = []
@@ -392,6 +427,14 @@ def build_report(cfg: Config, now: datetime, openmeteo: dict, qweather: dict | N
         "districts": districts_out,
         "points": points_out,
         "warnings": warnings,
+        "chinawx": {
+            "enabled": bool(chinawx and chinawx.get("enabled", True)),
+            "fetched_at": (chinawx or {}).get("fetched_at"),
+            "errors": (chinawx or {}).get("errors") or [],
+            "districts": official,
+        },
+        "official_events": official_events,
+        "official_divergence": official_divergence,
         "sources": {
             "primary": primary_name,
             "openmeteo": {
