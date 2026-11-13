@@ -73,16 +73,26 @@ def main(argv=None) -> int:
     if args.failure_notify:
         return _notify_failure(cfg, now, dry_run=args.dry_run or args.no_push)
 
-    # 1) 数据源
-    om_data = openmeteo.fetch(cfg, now)
+    # 1) 数据源：先取主源；校验源失败不阻断（主源为和风时 Open-Meteo 仅作校验）
     qw_data = None
     if cfg.qweather_enabled:
         try:
             qw_data = qweather.fetch(cfg, now)
         except Exception as exc:  # noqa: BLE001 - 副源失败不应阻断主流程
-            LOG.warning("和风天气获取失败，本次按单数据源运行：%s", exc)
+            LOG.warning("和风天气获取失败：%s", exc)
     else:
-        LOG.info("和风天气未配置（缺少 QWEATHER_KEY/QWEATHER_HOST），单数据源运行")
+        LOG.info("和风天气未配置（缺少 QWEATHER_KEY/QWEATHER_HOST）")
+
+    primary_is_qw = cfg.primary_source == "qweather"
+    try:
+        om_data = openmeteo.fetch(cfg, now, retries=2 if primary_is_qw else 4)
+    except Exception as exc:  # noqa: BLE001
+        if primary_is_qw:
+            LOG.warning("Open-Meteo（校验源）获取失败，本次以和风天气单源运行：%s", exc)
+            om_data = {"source": "openmeteo", "fetched_at": None,
+                       "models": list(cfg.om.get("models", [])), "series": {}}
+        else:
+            raise
 
     # 2) 计算
     report = compute.build_report(cfg, now, om_data, qw_data)
