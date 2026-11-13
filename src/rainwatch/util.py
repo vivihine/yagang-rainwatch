@@ -18,6 +18,9 @@ LOG = logging.getLogger("rainwatch")
 
 USER_AGENT = "yagang-rainwatch/1.0 (rainfall monitor for water-environment research)"
 
+# 重试等待秒数（应对网络抖动 / SSL 握手超时；Open-Meteo 偶发握手超时实测）
+_RETRY_WAITS = (3, 8, 15, 25, 40)
+
 
 class FetchError(RuntimeError):
     """网络/数据获取失败。"""
@@ -58,7 +61,7 @@ def _request(url: str, *, data: bytes | None = None, headers: dict | None = None
 
 def fetch_json(url: str, *, timeout: int = 30, retries: int = 3,
                headers: dict | None = None) -> dict | list:
-    """GET 并解析 JSON，带指数退避重试。"""
+    """GET 并解析 JSON，带退避重试（网络抖动/SSL 握手超时也会重试）。"""
     last_err: Exception | None = None
     for attempt in range(1, retries + 1):
         try:
@@ -68,7 +71,7 @@ def fetch_json(url: str, *, timeout: int = 30, retries: int = 3,
             last_err = exc
             LOG.warning("请求失败(%d/%d)：%s -> %s", attempt, retries, url[:120], exc)
             if attempt < retries:
-                time.sleep(1.5 * attempt)
+                time.sleep(_RETRY_WAITS[min(attempt - 1, len(_RETRY_WAITS) - 1)])
     raise FetchError(f"请求失败：{url[:160]}；最后错误：{last_err}") from last_err
 
 
@@ -88,7 +91,7 @@ def post_json(url: str, payload: dict, *, timeout: int = 30, retries: int = 2,
             last_err = exc
             LOG.warning("POST 失败(%d/%d)：%s -> %s", attempt, retries, url[:120], exc)
             if attempt < retries:
-                time.sleep(1.5 * attempt)
+                time.sleep(_RETRY_WAITS[min(attempt - 1, len(_RETRY_WAITS) - 1)])
     raise FetchError(f"POST 失败：{url[:160]}；最后错误：{last_err}") from last_err
 
 
