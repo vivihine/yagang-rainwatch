@@ -23,14 +23,19 @@ event_title_prefix = "鸦岗断面周边降雨提醒"
 # 看板/消息中区县的展示顺序（留空则按点位配置顺序）
 display_districts = ["花都", "白云", "从化"]
 
-# 主数据源：qweather = 和风天气为主（Open-Meteo 校验，推荐）；openmeteo = Open-Meteo 为主
+# 主数据源：openmeteo = Open-Meteo 为主（推荐，事件捕捉更好）；qweather = 和风为主
 [sources]
-primary = "qweather"
+primary = "openmeteo"
 
 [sources.openmeteo]
 enabled = true
 # 多模式同时取数，代码会自动取中位数作为主值、用模式分歧判断可靠性
 models = ["ecmwf_ifs025", "gfs_seamless", "cma_grapes_global"]
+
+[sources.chinawx]
+# 中国天气网（中国气象局公共气象服务中心）7天城市预报文本：仅作官方等级校验（无毫米数）
+enabled = true
+city_ids = { "从化" = "101280103", "花都" = "101280105", "白云" = "101280110" }
 
 [sources.qweather]
 enabled = true
