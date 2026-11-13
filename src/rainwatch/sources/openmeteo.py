@@ -47,7 +47,7 @@ def fetch(cfg: Config, now: datetime) -> dict:
 
     url = _build_url(cfg)
     LOG.info("Open-Meteo 请求：%d 个点位 × %d 个模式", len(cfg.points), len(cfg.om["models"]))
-    payload = fetch_json(url, timeout=40, retries=3)
+    payload = fetch_json(url, timeout=45, retries=4)
 
     locations = payload if isinstance(payload, list) else [payload]
     if len(locations) != len(cfg.points):
