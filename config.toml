@@ -23,6 +23,10 @@ event_title_prefix = "鸦岗断面周边降雨提醒"
 # 看板/消息中区县的展示顺序（留空则按点位配置顺序）
 display_districts = ["花都", "白云", "从化"]
 
+# 主数据源：qweather = 和风天气为主（Open-Meteo 校验，推荐）；openmeteo = Open-Meteo 为主
+[sources]
+primary = "qweather"
+
 [sources.openmeteo]
 enabled = true
 # 多模式同时取数，代码会自动取中位数作为主值、用模式分歧判断可靠性
