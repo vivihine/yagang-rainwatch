@@ -224,6 +224,8 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         source_bits = [f"{primary_label}（主）", f"{peer_label}(ECMWF/GFS/CMA)（校验）"]
     else:
         source_bits = [f"{primary_label}(ECMWF/GFS/CMA)（主）", f"{peer_label}（校验）"]
+    if report.get("agreement", {}).get("status") == "single":
+        source_bits = [f"{primary_label}（主，本次无校验源）"]
     agreement = report.get("agreement", {}).get("summary") or ""
     meta = "＋".join(source_bits) + (f"｜{agreement}" if agreement else "")
     if link:
@@ -342,6 +344,11 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
     peer_label = report.get("peer_label") or ("Open-Meteo" if primary == "qweather" else "和风天气")
     daily_note = report.get("daily_note") or ""
     note_html = (f'<p class="muted">{html_mod.escape(daily_note)}</p>' if daily_note else "")
+    single_source = report.get("agreement", {}).get("status") == "single"
+    source_desc = (f"{primary_label}（主）" if single_source
+                   else f"{primary_label}（主）＋{peer_label}（校验）")
+    footer_desc = (primary_label if single_source
+                   else f"{primary_label}（主）＋{peer_label}（校验）")
     repo_link = ""
     if cfg.repo_url:
         base = html_mod.escape(cfg.repo_url)
@@ -389,7 +396,7 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <body><div class="wrap">
 <h1>{html_mod.escape(cfg.page_title)}</h1>
 <div class="subtitle">{html_mod.escape(cfg.page_subtitle)}</div>
-<p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(primary_label)}（主）＋{html_mod.escape(peer_label)}（校验）</p>
+<p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(source_desc)}</p>
 <h2>关注提示</h2><ul>{advice_html}</ul>
 <h2>官方预警</h2><ul>{warn_html}</ul>
 <h2>逐日预报（水文日 08:00–次日08:00，单位 mm）</h2>
@@ -406,7 +413,7 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <h2>控制点明细（滚动累计，单位 mm）</h2>
 <table><thead><tr><th>控制点</th><th>区</th><th>河段</th>{''.join(f'<th>{h//24}天</th>' for h in horizons)}</tr></thead>
 <tbody>{''.join(point_rows)}</tbody></table>
-<footer>自动生成 · 数据来源 {html_mod.escape(primary_label)}（主）＋{html_mod.escape(peer_label)}（校验） · 预报存在不确定性，请结合官方预警使用<br>
+<footer>自动生成 · 数据来源 {html_mod.escape(footer_desc)} · 预报存在不确定性，请结合官方预警使用<br>
 统计口径：{html_mod.escape(agreement.get('summary') or '')}{repo_link}</footer>
 </div></body></html>
 """
