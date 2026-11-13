@@ -118,13 +118,14 @@ def build_advice(report: dict, cfg: Config) -> str:
                 continue
             items.append((order.index(district), idx, district, date, day))
     items.sort(key=lambda it: (it[0], it[1]))
+    divergences = list(report.get("official_divergence") or [])
 
-    if not items:
-        return (f"未来{cfg.general['forecast_days']}天预报以小雨为主，无中雨以上过程"
+    if not items and not divergences:
+        return (f"未来{cfg.general['forecast_days']}天主源（Open-Meteo）预报以小雨为主，无中雨以上过程"
                 "（中长期预报，临近可能调整），维持常规监测。")
 
     lines = [f"未来{cfg.general['forecast_days']}天关注"
-             f"（按花都→白云→从化上游优先级排列；中长期预报存在不确定性）："]
+             f"（主源 Open-Meteo；按花都→白云→从化上游优先级排列；中长期预报存在不确定性）："]
     for _, _, district, date, day in items[:4]:
         lead = (datetime.strptime(date, "%Y-%m-%d").date() - run.date()).days
         mm = float(day["mm"])
@@ -144,7 +145,14 @@ def build_advice(report: dict, cfg: Config) -> str:
             text += "（模式间差异较大，仅供参考）"
         lines.append(text)
     if len(items) > 4:
-        lines.append(f"（另有 {len(items) - 4} 项关注点，详见看板）")
+        lines.append(f"（另有 {len(items) - 4} 项主源关注点，详见看板）")
+    for div in divergences[:3]:
+        primary_mm = div.get("primary_mm")
+        primary_txt = f"{_fmt_mm(primary_mm)}mm" if primary_mm is not None else "无数据"
+        lines.append(f"{div['district']} {day_label(div['date'])}：中国天气网官方预报{div['level']}，"
+                     f"主源仅 {primary_txt}，两源存在分歧——按官方等级防范（以官方预警为准）。")
+    if len(divergences) > 3:
+        lines.append(f"（另有 {len(divergences) - 3} 项官方等级分歧，详见看板）")
     lines.append("以上为中长期预报，临近时可能调整，请以最新推送和官方预警为准。")
     return "\n".join(lines)
 
@@ -194,6 +202,17 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
     html_parts.append(f"<p><b>官方预警</b>：{warn_text}</p>")
     text_parts.append("官方预警：" + (warn_text if warnings else "暂无"))
 
+    # 官方预报（中国天气网，仅等级文本，无毫米数）
+    official_events = report.get("official_events") or []
+    if official_events:
+        grouped: dict[str, list[str]] = {}
+        for ev in official_events[:8]:
+            grouped.setdefault(ev["date"], []).append(f"{ev['district']}{ev['level']}")
+        off_text = "；".join(f"{day_label(date)} " + "、".join(names)
+                            for date, names in grouped.items())
+        html_parts.append(f"<p><b>官方预报（中国天气网）</b>：{html_mod.escape(off_text)}</p>")
+        text_parts.append("官方预报（中国天气网）：" + off_text)
+
     # 逐日预报（08–08时）
     daily_lines = []
     for idx, date in enumerate(report["days"]):
@@ -216,16 +235,21 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         rm = _rolling_map(report["districts"][d])
         text_parts.append(f"  {d} " + " / ".join(_fmt_mm(rm.get(h, {}).get("mm")) for h in horizons))
 
-    # 数据来源与一致性（主源 / 校验源）
+    # 数据来源与一致性（主源 / 官方等级 / 校验源）
     primary = report.get("primary") or "openmeteo"
     primary_label = report.get("primary_label") or ("和风天气" if primary == "qweather" else "Open-Meteo")
     peer_label = report.get("peer_label") or ("Open-Meteo" if primary == "qweather" else "和风天气")
+    official_available = bool((report.get("chinawx") or {}).get("districts"))
+    single_source = report.get("agreement", {}).get("status") == "single"
+    source_bits: list[str] = []
     if primary == "qweather":
-        source_bits = [f"{primary_label}（主）", f"{peer_label}(ECMWF/GFS/CMA)（校验）"]
+        source_bits.append(f"{primary_label}（主）")
     else:
-        source_bits = [f"{primary_label}(ECMWF/GFS/CMA)（主）", f"{peer_label}（校验）"]
-    if report.get("agreement", {}).get("status") == "single":
-        source_bits = [f"{primary_label}（主，本次无校验源）"]
+        source_bits.append(f"{primary_label}(ECMWF/GFS/CMA)（主）")
+    if official_available:
+        source_bits.append("中国天气网（官方等级）")
+    if not single_source:
+        source_bits.append(f"{peer_label}（校验）")
     agreement = report.get("agreement", {}).get("summary") or ""
     meta = "＋".join(source_bits) + (f"｜{agreement}" if agreement else "")
     if link:
@@ -303,18 +327,30 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         day_rows.append(f"<tr><td class='date'>{day_label(date)}</td>{''.join(cells)}</tr>")
 
     qw_rows = []
-    if report.get("sources", {}).get("qweather"):
+    official_map = (report.get("chinawx") or {}).get("districts") or {}
+    if report.get("sources", {}).get("qweather") or official_map:
         for district in order:
             cells = []
-            for day in report["districts"][district]["daily"]:
-                peer = day.get("peer_mm", day.get("qweather_mm"))
+            for date, day in zip(report["days"], report["districts"][district]["daily"]):
                 value = day.get("mm")
-                if peer is None:
-                    cells.append('<td class="muted">-</td>')
+                peer = day.get("peer_mm", day.get("qweather_mm"))
+                off = official_map.get(district, {}).get(date) or {}
+                off_level = off.get("level")
+                if off_level:
+                    color = LEVEL_COLORS.get(off_level, "#9aa4b2")
+                    official_cell = (f'<span class="badge" style="background:{color}">'
+                                     f'{html_mod.escape(off_level)}</span>')
                 else:
+                    official_cell = '<span class="muted">-</span>'
+                diff_txt = ""
+                cls = ""
+                if peer is not None:
                     diff = (value or 0) - peer
-                    cls = "diff-bad" if abs(diff) > cfg.agreement["warn_mm"] else ""
-                    cells.append(f'<td class="{cls}">{_fmt_mm(value)} / {_fmt_mm(peer)}<br><small>差 {diff:+.1f}</small></td>')
+                    diff_txt = f'<br><small>差 {diff:+.1f}</small>'
+                    if abs(diff) > cfg.agreement["warn_mm"]:
+                        cls = "diff-bad"
+                cells.append(f'<td class="{cls}"><b>{_fmt_mm(value)}</b> / {official_cell} / '
+                             f'<small>{_fmt_mm(peer)}</small>{diff_txt}</td>')
             qw_rows.append(f"<tr><td class='date'>{html_mod.escape(district)}</td>{''.join(cells)}</tr>")
 
     warn_html = "".join(
@@ -335,8 +371,10 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
     agreement = report.get("agreement", {})
     qw_errors = (report.get("sources", {}).get("qweather") or {}).get("errors") or []
     err_html = ""
-    if qw_errors:
-        err_html = '<p class="muted">和风天气部分请求告警：' + html_mod.escape("；".join(qw_errors[:3])) + "</p>"
+    chinawx_errors = (report.get("chinawx") or {}).get("errors") or []
+    if chinawx_errors:
+        err_html += ('<p class="muted">中国天气网部分请求告警：'
+                     + html_mod.escape("；".join(chinawx_errors[:3])) + "</p>")
 
     models = "、".join(report.get("sources", {}).get("openmeteo", {}).get("models", []))
     primary = report.get("primary") or "openmeteo"
@@ -344,11 +382,28 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
     peer_label = report.get("peer_label") or ("Open-Meteo" if primary == "qweather" else "和风天气")
     daily_note = report.get("daily_note") or ""
     note_html = (f'<p class="muted">{html_mod.escape(daily_note)}</p>' if daily_note else "")
+    official_available = bool((report.get("chinawx") or {}).get("districts"))
     single_source = report.get("agreement", {}).get("status") == "single"
-    source_desc = (f"{primary_label}（主）" if single_source
-                   else f"{primary_label}（主）＋{peer_label}（校验）")
-    footer_desc = (primary_label if single_source
-                   else f"{primary_label}（主）＋{peer_label}（校验）")
+    official_part = "＋中国天气网（官方等级）" if official_available else ""
+    peer_part = "" if single_source else f"＋{peer_label}（校验）"
+    source_desc = f"{primary_label}（主）{official_part}{peer_part}"
+    footer_desc = source_desc
+    if official_available:
+        compare_title = (f"多源对比（{primary_label}（主）/ 中国天气网（官方等级）/ "
+                         f"{peer_label}（校验），单位 mm）")
+    else:
+        compare_title = f"多源对比（{primary_label}（主）/ {peer_label}（校验），单位 mm）"
+    # 官方等级（中国天气网）摘要
+    official_events = report.get("official_events") or []
+    if official_events:
+        grouped: dict[str, list[str]] = {}
+        for ev in official_events[:10]:
+            grouped.setdefault(ev["date"], []).append(f"{ev['district']}{ev['level']}")
+        off_text = "；".join(f"{day_label(date)} " + "、".join(names)
+                            for date, names in grouped.items())
+        official_note_html = f'<p class="muted">中国天气网官方等级：{html_mod.escape(off_text)}</p>'
+    else:
+        official_note_html = ""
     repo_link = ""
     if cfg.repo_url:
         base = html_mod.escape(cfg.repo_url)
@@ -403,10 +458,10 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <table><thead><tr><th>日期</th>{''.join(f'<th>{html_mod.escape(d)}</th>' for d in order)}</tr></thead>
 <tbody>{''.join(day_rows)}</tbody></table>
 <p class="muted">单元格：区级面雨量（区内控制点均值）与等级；鼠标悬停可看局部最大点。</p>
-{note_html}
+{note_html}{official_note_html}
 <h2>滚动累计（距当前 1/3/5天的累计量，单位 mm）</h2>
 <div class="cards">{''.join(cards)}</div>
-<h2>双源对比（{html_mod.escape(primary_label)} / {html_mod.escape(peer_label)}，单位 mm）</h2>
+<h2>{html_mod.escape(compare_title)}</h2>
 <table><thead><tr><th>区</th>{''.join(f'<th>{day_label(d)}</th>' for d in report['days'])}</tr></thead>
 <tbody>{''.join(qw_rows) or '<tr><td colspan="6" class="muted">无对比源数据（仅单源）</td></tr>'}</tbody></table>
 {err_html}
