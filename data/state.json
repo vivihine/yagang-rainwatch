@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-11-13T09:00",
+  "last_run": "2026-11-13T09:25",
   "daily_reports": {
     "2026-11-06": {
       "08": "2026-11-06T08:00",
@@ -67,20 +67,20 @@
     "从化": {
       "rolling24_mm": 35.0,
       "rolling24_level": "大雨",
-      "day1_mm": 6.2,
+      "day1_mm": 0.5,
       "day1_level": "小雨"
     },
     "花都": {
       "rolling24_mm": 38.0,
       "rolling24_level": "大雨",
-      "day1_mm": 1.4,
+      "day1_mm": 0.2,
       "day1_level": "小雨"
     },
     "白云": {
       "rolling24_mm": 30.0,
       "rolling24_level": "大雨",
-      "day1_mm": 1.0,
-      "day1_level": "小雨"
+      "day1_mm": 0.0,
+      "day1_level": "无雨"
     }
   }
 }
