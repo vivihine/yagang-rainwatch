@@ -216,10 +216,14 @@ def make_message(report: dict, cfg: Config, kind: str = "daily",
         rm = _rolling_map(report["districts"][d])
         text_parts.append(f"  {d} " + " / ".join(_fmt_mm(rm.get(h, {}).get("mm")) for h in horizons))
 
-    # 数据来源与一致性
-    source_bits = ["Open-Meteo(ECMWF/GFS/CMA)"]
-    if report.get("sources", {}).get("qweather"):
-        source_bits.append("和风天气")
+    # 数据来源与一致性（主源 / 校验源）
+    primary = report.get("primary") or "openmeteo"
+    primary_label = report.get("primary_label") or ("和风天气" if primary == "qweather" else "Open-Meteo")
+    peer_label = report.get("peer_label") or ("Open-Meteo" if primary == "qweather" else "和风天气")
+    if primary == "qweather":
+        source_bits = [f"{primary_label}（主）", f"{peer_label}(ECMWF/GFS/CMA)（校验）"]
+    else:
+        source_bits = [f"{primary_label}(ECMWF/GFS/CMA)（主）", f"{peer_label}（校验）"]
     agreement = report.get("agreement", {}).get("summary") or ""
     meta = "＋".join(source_bits) + (f"｜{agreement}" if agreement else "")
     if link:
@@ -301,14 +305,14 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         for district in order:
             cells = []
             for day in report["districts"][district]["daily"]:
-                qw = day.get("qweather_mm")
-                om = day.get("mm")
-                if qw is None:
+                peer = day.get("peer_mm", day.get("qweather_mm"))
+                value = day.get("mm")
+                if peer is None:
                     cells.append('<td class="muted">-</td>')
                 else:
-                    diff = (om or 0) - qw
+                    diff = (value or 0) - peer
                     cls = "diff-bad" if abs(diff) > cfg.agreement["warn_mm"] else ""
-                    cells.append(f'<td class="{cls}">{_fmt_mm(om)} / {_fmt_mm(qw)}<br><small>差 {diff:+.1f}</small></td>')
+                    cells.append(f'<td class="{cls}">{_fmt_mm(value)} / {_fmt_mm(peer)}<br><small>差 {diff:+.1f}</small></td>')
             qw_rows.append(f"<tr><td class='date'>{html_mod.escape(district)}</td>{''.join(cells)}</tr>")
 
     warn_html = "".join(
@@ -333,6 +337,11 @@ def render_dashboard(report: dict, history: list[dict], cfg: Config) -> str:
         err_html = '<p class="muted">和风天气部分请求告警：' + html_mod.escape("；".join(qw_errors[:3])) + "</p>"
 
     models = "、".join(report.get("sources", {}).get("openmeteo", {}).get("models", []))
+    primary = report.get("primary") or "openmeteo"
+    primary_label = report.get("primary_label") or ("和风天气" if primary == "qweather" else "Open-Meteo")
+    peer_label = report.get("peer_label") or ("Open-Meteo" if primary == "qweather" else "和风天气")
+    daily_note = report.get("daily_note") or ""
+    note_html = (f'<p class="muted">{html_mod.escape(daily_note)}</p>' if daily_note else "")
     repo_link = ""
     if cfg.repo_url:
         base = html_mod.escape(cfg.repo_url)
@@ -380,23 +389,24 @@ footer {{ margin:28px 0 8px; color:#9aa4b2; font-size:11px; text-align:center; }
 <body><div class="wrap">
 <h1>{html_mod.escape(cfg.page_title)}</h1>
 <div class="subtitle">{html_mod.escape(cfg.page_subtitle)}</div>
-<p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(models)}</p>
+<p class="muted">更新：{run_label}（北京时间） · {html_mod.escape(cfg.summary())} · 数据源：{html_mod.escape(primary_label)}（主）＋{html_mod.escape(peer_label)}（校验）</p>
 <h2>关注提示</h2><ul>{advice_html}</ul>
 <h2>官方预警</h2><ul>{warn_html}</ul>
 <h2>逐日预报（水文日 08:00–次日08:00，单位 mm）</h2>
 <table><thead><tr><th>日期</th>{''.join(f'<th>{html_mod.escape(d)}</th>' for d in order)}</tr></thead>
 <tbody>{''.join(day_rows)}</tbody></table>
-<p class="muted">单元格：区级面雨量（区内控制点中位数均值）与等级；鼠标悬停可看局部最大点。</p>
+<p class="muted">单元格：区级面雨量（区内控制点均值）与等级；鼠标悬停可看局部最大点。</p>
+{note_html}
 <h2>滚动累计（距当前 1/3/5天的累计量，单位 mm）</h2>
 <div class="cards">{''.join(cards)}</div>
-<h2>双源对比（Open-Meteo / 和风天气，单位 mm）</h2>
+<h2>双源对比（{html_mod.escape(primary_label)} / {html_mod.escape(peer_label)}，单位 mm）</h2>
 <table><thead><tr><th>区</th>{''.join(f'<th>{day_label(d)}</th>' for d in report['days'])}</tr></thead>
-<tbody>{''.join(qw_rows) or '<tr><td colspan="6" class="muted">未配置和风天气，当前为单数据源</td></tr>'}</tbody></table>
+<tbody>{''.join(qw_rows) or '<tr><td colspan="6" class="muted">无对比源数据（仅单源）</td></tr>'}</tbody></table>
 {err_html}
 <h2>控制点明细（滚动累计，单位 mm）</h2>
 <table><thead><tr><th>控制点</th><th>区</th><th>河段</th>{''.join(f'<th>{h//24}天</th>' for h in horizons)}</tr></thead>
 <tbody>{''.join(point_rows)}</tbody></table>
-<footer>自动生成 · 数据来源 Open-Meteo（CC BY 4.0）与和风天气 · 预报存在不确定性，请结合官方预警使用<br>
+<footer>自动生成 · 数据来源 {html_mod.escape(primary_label)}（主）＋{html_mod.escape(peer_label)}（校验） · 预报存在不确定性，请结合官方预警使用<br>
 统计口径：{html_mod.escape(agreement.get('summary') or '')}{repo_link}</footer>
 </div></body></html>
 """
@@ -434,7 +444,7 @@ def _forecast_rows(report: dict, cfg: Config) -> list[list]:
         for day in data["daily"]:
             rows.append([run, "daily", day["date"], district, "", "", day.get("mm"),
                          day.get("level"), day.get("concern"), day.get("spread_mm"),
-                         day.get("qweather_mm"), day.get("agreement")])
+                         day.get("peer_mm", day.get("qweather_mm")), day.get("agreement")])
         for item in data["rolling"]:
             rows.append([run, "rolling", f"{item['hours']}h", district, "", "",
                          item.get("mm"), item.get("level"), item.get("concern"),
