@@ -100,6 +100,18 @@ class TestBuildReportPrimary(unittest.TestCase):
         huadu = report["districts"]["花都"]["daily"][0]
         self.assertAlmostEqual(huadu["mm"], 24.0, places=1)
 
+    def test_openmeteo_unavailable_still_uses_qweather(self):
+        """主源为和风时，Open-Meteo（校验源）挂掉不应导致运行失败。"""
+        cfg = fake_cfg()
+        now = datetime(2026, 11, 3, 19, 0)
+        empty_om = {"series": {}, "models": [], "fetched_at": None}
+        report = compute.build_report(cfg, now, empty_om, fake_qweather())
+        self.assertEqual(report["primary"], "qweather")
+        huadu = report["districts"]["花都"]["daily"][0]
+        self.assertAlmostEqual(huadu["mm"], 20.0, places=1)
+        self.assertEqual(report["agreement"]["status"], "single")
+        self.assertIsNone(huadu["peer_mm"])
+
 
 class TestRenderPrimary(unittest.TestCase):
     def test_message_and_dashboard_labels(self):
