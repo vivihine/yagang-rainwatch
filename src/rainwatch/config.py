@@ -79,6 +79,7 @@ class Config:
 
         self.om = _merge(OPENMETEO_DEFAULTS, raw.get("sources", {}).get("openmeteo"))
         self.qw = _merge(QWEATHER_DEFAULTS, raw.get("sources", {}).get("qweather"))
+        self.primary = str(raw.get("sources", {}).get("primary", "openmeteo")).strip().lower()
 
         th = raw.get("thresholds", {})
         self.rain_mm = [float(x) for x in th.get("rain_levels_mm", DEFAULT_RAIN_THRESHOLDS)]
@@ -194,6 +195,11 @@ class Config:
     @property
     def repo_url(self) -> str:
         return (self.general.get("repo_url") or os.environ.get("REPO_URL", "")).strip().rstrip("/")
+
+    @property
+    def primary_source(self) -> str:
+        """主数据源：qweather（和风，默认）或 openmeteo。"""
+        return self.primary if self.primary in ("openmeteo", "qweather") else "openmeteo"
 
     @property
     def page_title(self) -> str:
