@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 from datetime import datetime
 
-from . import __version__, alerts, compute, notifier, render
+from . import __version__, alerts, compute, health, notifier, render
 from .config import Config
 from .sources import chinawx, openmeteo, qweather
 from .util import iso_minute, now_local
@@ -23,30 +24,26 @@ def parse_args(argv=None):
     parser.add_argument("--no-write", action="store_true", help="不写任何数据/看板文件")
     parser.add_argument("--force-report", action="store_true", help="忽略时段判断，强制推一次完整日报")
     parser.add_argument("--test-push", action="store_true", help="只发一条测试消息后退出（验证推送通道）")
-    parser.add_argument("--failure-notify", action="store_true",
-                        help="运行失败时给管理员发提醒（每个自然日最多 1 条）")
+    parser.add_argument("--record-failure", action="store_true",
+                        help="记录一次运行失败（供每周健康报告统计，不发 WxPusher）")
+    parser.add_argument("--weekly-health", action="store_true",
+                        help="检查并发送每周健康报告（仅周一 08–11 点且本周有故障时发送）")
+    parser.add_argument("--test-email", action="store_true", help="发送一封测试邮件给管理员（验证邮件通道）")
     parser.add_argument("--now", help="覆盖当前时间（ISO格式，调试用），如 2026-11-01T08:05")
     parser.add_argument("--verbose", action="store_true", help="输出调试日志")
     return parser.parse_args(argv)
 
 
-def _notify_failure(cfg: Config, now: datetime, dry_run: bool = False) -> int:
-    """运行失败时给管理员发一条提醒，每个自然日最多 1 条（避免刷屏）。"""
-    state = alerts.load_state(cfg.state_path)
-    today = now.date().isoformat()
-    if state.get("last_failure_notify") == today:
-        LOG.info("今日已发送过失败提醒，跳过（%s）", today)
-        return 0
-    title = f"{cfg.message_title_prefix}·运行失败提醒"
-    content = ("<p><b>云端运行失败</b></p>"
-               f"<p>时间：{iso_minute(now)}</p>"
-               "<p>可能原因：数据源网络超时（Open-Meteo 偶发 SSL 握手超时）等。</p>"
-               "<p>系统会在下一整点自动重试；若同一天多次失败，请到 GitHub Actions 查看日志。</p>")
-    result = notifier.push(cfg, title, content, dry_run=dry_run)
-    LOG.info("失败提醒推送结果：%s", result)
-    if result.get("ok") and not dry_run:
-        state["last_failure_notify"] = today
-        alerts.save_state(cfg.state_path, state)
+def _record_failure(cfg: Config, now: datetime) -> int:
+    """记录一次运行失败（写入 data/health，供每周汇总邮件统计；不再发 WxPusher）。"""
+    health.record_failure(cfg, now, {
+        "run_id": os.environ.get("GITHUB_RUN_ID"),
+        "run_number": os.environ.get("GITHUB_RUN_NUMBER"),
+        "run_url": os.environ.get("GITHUB_RUN_URL"),
+        "event": os.environ.get("GITHUB_EVENT_NAME"),
+        "step": os.environ.get("GITHUB_FAILED_STEP") or "Run rainwatch",
+        "note": os.environ.get("GITHUB_FAILURE_NOTE") or "主流程异常，详见 Actions 日志",
+    })
     return 0
 
 
@@ -70,8 +67,20 @@ def main(argv=None) -> int:
             return 0
         return 2
 
-    if args.failure_notify:
-        return _notify_failure(cfg, now, dry_run=args.dry_run or args.no_push)
+    if args.test_email:
+        result = health.send_test_email(cfg, now)
+        LOG.info("测试邮件结果：%s", result)
+        return 0 if result.get("ok") else 2
+
+    if args.record_failure:
+        return _record_failure(cfg, now)
+
+    if args.weekly_health:
+        state = alerts.load_state(cfg.state_path)
+        result = health.maybe_send_weekly(cfg, now, state)
+        alerts.save_state(cfg.state_path, state)
+        LOG.info("每周健康报告检查结果：%s", result)
+        return 0
 
     # 1) 数据源：先取主源；校验源/官方等级源失败不阻断（主源为和风时 Open-Meteo 仅作校验）
     qw_data = None
@@ -145,11 +154,22 @@ def main(argv=None) -> int:
             render.write_alert_csv(report["run_time"], push_kind, events, push_result,
                                    cfg.data_dir / "csv")
 
-    # 6) 状态（dry-run 不落状态，便于重复测试）
+    # 6) 状态 + 健康记录（dry-run 不落状态，便于重复测试）
     if not args.dry_run:
         state["last_run"] = iso_minute(now)
         state["prev"] = alerts.snapshot(report)
         alerts.prune_event_counts(state, now)
+        source_errors = {
+            "openmeteo": len((report.get("sources", {}).get("openmeteo") or {}).get("errors") or []),
+            "qweather": len((report.get("sources", {}).get("qweather") or {}).get("errors") or []),
+            "chinawx": len((report.get("chinawx") or {}).get("errors") or []),
+        }
+        health.record_run(cfg, now, push_kind or "none", source_errors)
+        weekly = health.maybe_send_weekly(cfg, now, state)
+        if weekly.get("ok"):
+            LOG.info("每周健康报告已发送")
+        elif not weekly.get("skipped"):
+            LOG.warning("每周健康报告发送失败：%s", weekly)
         alerts.save_state(cfg.state_path, state)
 
     if args.dry_run or args.no_push:
