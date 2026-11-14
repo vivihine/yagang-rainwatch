@@ -50,6 +50,8 @@ ALERT_DEFAULTS = {
 
 AGREEMENT_DEFAULTS = {"ok_mm": 5.0, "warn_mm": 10.0}
 
+HEALTH_DEFAULTS = {"admin_email": ""}
+
 DEFAULT_RAIN_THRESHOLDS = [0.1, 10.0, 25.0, 50.0, 100.0, 250.0]
 DEFAULT_RAIN_NAMES = ["小雨", "中雨", "大雨", "暴雨", "大暴雨", "特大暴雨"]
 DEFAULT_CONCERN_THRESHOLDS = [10.0, 25.0, 50.0, 100.0]
@@ -99,6 +101,7 @@ class Config:
 
         self.alerts = _merge(ALERT_DEFAULTS, raw.get("alerts"))
         self.agreement = _merge(AGREEMENT_DEFAULTS, raw.get("model_agreement"))
+        self.health = _merge(HEALTH_DEFAULTS, raw.get("health"))
         self.notify = _merge({"channel": "pushplus"}, raw.get("notify"))
 
         self.points = self._resolve_points()
@@ -210,6 +213,12 @@ class Config:
     @property
     def chinawx_enabled(self) -> bool:
         return bool(self.chinawx.get("enabled", True)) and bool(self.chinawx.get("city_ids"))
+
+    @property
+    def admin_email(self) -> str:
+        """管理员邮箱（失败/周报只发这里）：环境变量 ADMIN_EMAIL 优先。"""
+        return (os.environ.get("ADMIN_EMAIL", "").strip()
+                or str(self.health.get("admin_email") or "").strip())
 
     @property
     def page_title(self) -> str:
