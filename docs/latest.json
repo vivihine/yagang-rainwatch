@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-14T11:00",
+  "run_time": "2026-11-14T11:34",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -676,13 +676,13 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-14T11:00",
+    "fetched_at": "2026-11-14T11:34",
     "errors": [],
     "districts": {
       "从化": {
         "2026-11-14": {
-          "text": "晴",
-          "level": "无雨"
+          "text": "阵雨转晴",
+          "level": "小雨"
         },
         "2026-11-15": {
           "text": "多云转晴",
@@ -705,14 +705,14 @@
           "level": "无雨"
         },
         "2026-11-20": {
-          "text": "阴",
+          "text": "多云",
           "level": "无雨"
         }
       },
       "花都": {
         "2026-11-14": {
-          "text": "晴",
-          "level": "无雨"
+          "text": "阵雨转晴",
+          "level": "小雨"
         },
         "2026-11-15": {
           "text": "晴",
@@ -735,14 +735,14 @@
           "level": "无雨"
         },
         "2026-11-20": {
-          "text": "阴",
+          "text": "多云",
           "level": "无雨"
         }
       },
       "白云": {
         "2026-11-14": {
-          "text": "晴",
-          "level": "无雨"
+          "text": "阵雨转晴",
+          "level": "小雨"
         },
         "2026-11-15": {
           "text": "晴",
@@ -765,7 +765,7 @@
           "level": "无雨"
         },
         "2026-11-20": {
-          "text": "阴",
+          "text": "多云",
           "level": "无雨"
         }
       }
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-14T11:00",
+      "fetched_at": "2026-11-14T11:34",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-14T11:00",
+      "fetched_at": "2026-11-14T11:34",
       "errors": []
     }
   },
