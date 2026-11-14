@@ -309,16 +309,78 @@ def maybe_send_weekly(cfg: Config, now: datetime, state: dict) -> dict:
         LOG.info("本周无运行故障，跳过周报邮件")
         return {"skipped": True, "reason": "本周无故障"}
     subject, text, html = report
-    result = send_email(cfg, subject, text, html)
-    if result.get("ok") or result.get("skipped"):
+    result = deliver_weekly(cfg, subject, text, html)
+    if result.get("ok"):
         state["weekly_report_sent"] = today
     LOG.info("每周健康报告发送结果：%s", result)
     return result
 
 
+# ---------------------------------------------------------------- GitHub Issue 通道（零授权码方案）
+def _github_token() -> str:
+    return (os.environ.get("GH_TOKEN", "").strip()
+            or os.environ.get("GITHUB_TOKEN", "").strip())
+
+
+def _github_repo() -> str:
+    return os.environ.get("GITHUB_REPOSITORY", "").strip()
+
+
+def _github_post(url: str, payload: dict, token: str) -> dict:
+    request = urllib.request.Request(
+        url, data=json.dumps(payload).encode("utf-8"), method="POST",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json",
+                 "X-GitHub-Api-Version": "2022-11-28",
+                 "Content-Type": "application/json", "User-Agent": "yagang-rainwatch/1.0"})
+    with urllib.request.urlopen(request, timeout=30) as response:
+        return json.loads(response.read().decode("utf-8") or "{}")
+
+
+def send_github_issue(cfg: Config, subject: str, text: str) -> dict:
+    """创建 GitHub Issue 并指派给管理员（GitHub 会发送通知邮件，无需授权码）。"""
+    token, repo = _github_token(), _github_repo()
+    if not token or not repo:
+        return {"ok": False, "skipped": True,
+                "reason": "未配置 GitHub Issue 通道（需 GH_TOKEN 与 GITHUB_REPOSITORY）"}
+    owner = repo.split("/")[0]
+    body = (text + "\n\n---\n"
+            f"> 本 Issue 由系统自动创建，仅管理员可见；已指派给 @{owner}（GitHub 会通知该账号）。")
+    try:
+        issue = _github_post(f"https://api.github.com/repos/{repo}/issues",
+                             {"title": subject, "body": body, "assignees": [owner]}, token)
+        return {"ok": True, "channel": "github_issue",
+                "issue_url": issue.get("html_url"), "issue_number": issue.get("number")}
+    except Exception as exc:  # noqa: BLE001 - 通知失败不影响主流程
+        LOG.warning("创建 GitHub Issue 失败：%s", exc)
+        return {"ok": False, "channel": "github_issue", "reason": str(exc)[:200]}
+
+
+def deliver_weekly(cfg: Config, subject: str, text: str, html: str) -> dict:
+    """周报投递：配了邮箱就走邮件；否则用 GitHub Issue（默认零授权码方案）。"""
+    email = send_email(cfg, subject, text, html)
+    if email.get("ok"):
+        return email
+    issue = send_github_issue(cfg, subject, text)
+    if issue.get("ok"):
+        return issue
+    if not email.get("skipped"):
+        return email
+    return issue
+
+
 def send_test_email(cfg: Config, now: datetime) -> dict:
-    """验证邮件通道（--test-email）。"""
+    """验证 SMTP/Resend 邮件通道（--test-email）。"""
     subject = f"【测试】鸦岗降雨预报管理员邮件通道 {now:%m-%d %H:%M}"
     text = "这是一封测试邮件：邮件通道配置成功。\n\n（正常运行时仅在每周一 08:00 且本周有故障时才发送汇总。）"
     html = f"<p>这是一封测试邮件：<b>邮件通道配置成功</b>。</p><p>正常运行时仅在每周一 08:00 且本周有故障时才发送汇总。</p>"
     return send_email(cfg, subject, text, html)
+
+
+def send_test_issue(cfg: Config, now: datetime) -> dict:
+    """验证 GitHub Issue + 通知邮件通道（--test-issue，零授权码方案）。"""
+    subject = f"【测试】鸦岗降雨预报周报通道（GitHub Issue）{now:%m-%d %H:%M}"
+    text = ("这是一条测试记录：周报通道（GitHub Issue + GitHub 通知邮件）配置成功。\n\n"
+            "正常运行时：每周一 08:00 检查过去 7 天运行情况，"
+            "**仅有故障时**才会自动创建一份健康报告 Issue（无故障不创建、不发通知）。\n\n"
+            "看到本 Issue 说明：GitHub 通知设置可正常收信；确认后可直接关闭本测试 Issue。")
+    return send_github_issue(cfg, subject, text)
