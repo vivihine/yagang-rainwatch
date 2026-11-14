@@ -100,7 +100,7 @@ python -m rainwatch --dry-run             # 抓取 + 计算 + 生成看板 + 打
 
 - **Bark（iPhone）**：App 里复制设备 key，填 `BARK_KEY=xxx`（config.toml 里可固定 `channel = "bark"`）
 - **PushPlus**：如你愿意付费实名，也可继续用，填 `PUSHPLUS_TOKEN=xxx` 并在 config.toml 里设 `channel = "pushplus"`
-- **邮件**：暂未内置，需要时可扩展
+- **邮件（管理员专用）**：系统失败/运维提醒**不再发微信**，改为**每周一 08:00** 一封健康汇总邮件（本周无故障不发）；支持 SMTP（QQ/163 授权码）或 Resend 免费 API
 
 ### 3.4 让多个同事一起接收（多用户，免费）
 
@@ -138,6 +138,7 @@ WxPusher 支持多人订阅同一个应用，两种做法：
    脚本会自动：创建仓库 → 上传全部文件 → 设置 Actions 写权限 → 开启 Pages(main /docs) → 打印仓库与看板地址
 4. 到仓库 Settings → Secrets and variables → Actions，添加：
    - `WXPUSHER_APP_TOKEN`、`WXPUSHER_UID`（推荐；也可只配 `WXPUSHER_SPT`）
+   - `ADMIN_EMAIL` + 邮件通道（`SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`/`SMTP_PASS`/`SMTP_FROM`，或 `RESEND_API_KEY`）：管理员周报邮件；系统失败不再发 WxPusher
    - `QWEATHER_HOST`、`QWEATHER_KEY`（可选）
 5. Actions 页面 → 左侧 `rainwatch` → `Run workflow` 手动跑一次，刷新看板确认
 6. 把看板地址填到 `config.toml` 的 `dashboard_url`，再运行一次 `python tools/github_deploy.py` 同步
