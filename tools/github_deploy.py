@@ -100,7 +100,9 @@ def collect_files() -> list[Path]:
 
 
 SECRET_NAMES = ["WXPUSHER_APP_TOKEN", "WXPUSHER_UID", "WXPUSHER_TOPIC_IDS",
-                "WXPUSHER_SPT", "QWEATHER_HOST", "QWEATHER_KEY", "BARK_KEY", "PUSHPLUS_TOKEN"]
+                "WXPUSHER_SPT", "QWEATHER_HOST", "QWEATHER_KEY", "BARK_KEY", "PUSHPLUS_TOKEN",
+                "ADMIN_EMAIL", "SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASS", "SMTP_FROM",
+                "RESEND_API_KEY"]
 
 
 def load_local_secrets() -> dict:
