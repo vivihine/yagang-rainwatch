@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-11-14T12:00",
+  "last_run": "2026-11-14T13:05",
   "daily_reports": {
     "2026-11-07": {
       "08": "2026-11-07T08:00",
@@ -78,8 +78,8 @@
   ],
   "prev": {
     "从化": {
-      "rolling24_mm": 0.1,
-      "rolling24_level": "小雨",
+      "rolling24_mm": 0.0,
+      "rolling24_level": "无雨",
       "day1_mm": 0.0,
       "day1_level": "无雨",
       "official_level": "无雨"
