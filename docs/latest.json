@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-14T18:52",
+  "run_time": "2026-11-14T19:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -267,19 +267,19 @@
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 2.4
+            "mm": 2.5
           }
         },
         {
           "hours": 120,
-          "mm": 5.8,
+          "mm": 5.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
           "concern": "关注",
           "max_point": {
             "name": "花都城区",
-            "mm": 6.9
+            "mm": 7.0
           }
         }
       ],
@@ -423,7 +423,7 @@
           "concern": "关注",
           "max_point": {
             "name": "李溪坝",
-            "mm": 6.9
+            "mm": 7.0
           }
         }
       ],
@@ -568,8 +568,8 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 2.4,
-        "120": 5.7
+        "72": 2.5,
+        "120": 5.8
       }
     },
     "HD-03": {
@@ -594,7 +594,7 @@
       "rolling": {
         "24": 0.0,
         "72": 1.5,
-        "120": 6.9
+        "120": 7.0
       }
     },
     "BY-01": {
@@ -619,7 +619,7 @@
       "rolling": {
         "24": 0.0,
         "72": 1.5,
-        "120": 6.9
+        "120": 7.0
       }
     },
     "BY-02": {
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-14T18:52",
+    "fetched_at": "2026-11-14T19:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-14T18:52",
+      "fetched_at": "2026-11-14T19:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-14T18:52",
+      "fetched_at": "2026-11-14T19:00",
       "errors": []
     }
   },
