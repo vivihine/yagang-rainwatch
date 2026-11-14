@@ -60,6 +60,9 @@ jobs:
           # 备选通道（可不配）：
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           BARK_KEY: ${{ secrets.BARK_KEY }}
+          # 零授权码周报通道（GitHub Issue）需要：
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set +e
           python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_issue && '--test-issue' || '' }}
