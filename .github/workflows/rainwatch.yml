@@ -15,6 +15,11 @@ on:
         required: false
         type: boolean
         default: false
+      test_email:
+        description: "发送一封测试邮件给管理员（验证邮件通道）"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -51,31 +56,42 @@ jobs:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: |
           set +e
-          python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }}
+          python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }}
           code=$?
           if [ "$code" -ne 0 ]; then
             echo "::warning::首次运行失败（退出码 $code），60 秒后自动重试一次"
             sleep 60
-            python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }}
+            python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }}
           fi
 
-      - name: Notify failure
+      - name: Weekly health report
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python -m rainwatch --weekly-health
+
+      - name: Record failure
         if: failure()
         env:
           PYTHONPATH: src
-          WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
-          WXPUSHER_UID: ${{ secrets.WXPUSHER_UID }}
-          WXPUSHER_TOPIC_IDS: ${{ secrets.WXPUSHER_TOPIC_IDS }}
-          WXPUSHER_SPT: ${{ secrets.WXPUSHER_SPT }}
-          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          BARK_KEY: ${{ secrets.BARK_KEY }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
-          python -m rainwatch --failure-notify || true
+          python -m rainwatch --record-failure || true
           git config user.name "rainwatch-bot"
           git config user.email "rainwatch-bot@users.noreply.github.com"
-          if [ -n "$(git status --porcelain data/state.json)" ]; then
-            git add data/state.json
-            git commit -m "alert: run failure $(date -u +%Y-%m-%dT%H:%MZ)"
+          if [ -n "$(git status --porcelain data)" ]; then
+            git add data
+            git commit -m "health: failure $(date -u +%Y-%m-%dT%H:%MZ)"
             git push || true
           fi
 
