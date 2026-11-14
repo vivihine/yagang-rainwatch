@@ -16,13 +16,19 @@ on:
         type: boolean
         default: false
       test_email:
-        description: "发送一封测试邮件给管理员（验证邮件通道）"
+        description: "发送一封测试邮件给管理员（验证邮件通道，可选）"
+        required: false
+        type: boolean
+        default: false
+      test_issue:
+        description: "创建一个测试 GitHub Issue（验证零授权码周报通道）"
         required: false
         type: boolean
         default: false
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: rainwatch
@@ -56,12 +62,12 @@ jobs:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: |
           set +e
-          python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }}
+          python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_issue && '--test-issue' || '' }}
           code=$?
           if [ "$code" -ne 0 ]; then
             echo "::warning::首次运行失败（退出码 $code），60 秒后自动重试一次"
             sleep 60
-            python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }}
+            python -m rainwatch ${{ github.event_name == 'workflow_dispatch' && inputs.force_report && '--force-report' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_email && '--test-email' || '' }} ${{ github.event_name == 'workflow_dispatch' && inputs.test_issue && '--test-issue' || '' }}
           fi
 
       - name: Weekly health report
@@ -75,6 +81,8 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python -m rainwatch --weekly-health
 
       - name: Record failure
