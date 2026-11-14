@@ -29,6 +29,8 @@ def parse_args(argv=None):
     parser.add_argument("--weekly-health", action="store_true",
                         help="检查并发送每周健康报告（仅周一 08–11 点且本周有故障时发送）")
     parser.add_argument("--test-email", action="store_true", help="发送一封测试邮件给管理员（验证邮件通道）")
+    parser.add_argument("--test-issue", action="store_true",
+                        help="创建一个测试 GitHub Issue（验证零授权码周报通道）")
     parser.add_argument("--now", help="覆盖当前时间（ISO格式，调试用），如 2026-11-01T08:05")
     parser.add_argument("--verbose", action="store_true", help="输出调试日志")
     return parser.parse_args(argv)
@@ -70,6 +72,11 @@ def main(argv=None) -> int:
     if args.test_email:
         result = health.send_test_email(cfg, now)
         LOG.info("测试邮件结果：%s", result)
+        return 0 if result.get("ok") else 2
+
+    if args.test_issue:
+        result = health.send_test_issue(cfg, now)
+        LOG.info("测试 Issue 结果：%s", result)
         return 0 if result.get("ok") else 2
 
     if args.record_failure:
