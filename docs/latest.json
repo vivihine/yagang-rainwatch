@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-15T18:00",
+  "run_time": "2026-11-15T18:04",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -321,8 +321,8 @@
           },
           "peer_mm": 1.8,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-17",
@@ -337,8 +337,8 @@
           },
           "peer_mm": 1.2,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-18",
@@ -353,8 +353,8 @@
           },
           "peer_mm": 3.5,
           "agreement": "一致",
-          "official_level": "小雨",
-          "official_text": "小雨转多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-19",
@@ -369,8 +369,8 @@
           },
           "peer_mm": 0.7,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-20",
@@ -385,8 +385,8 @@
           },
           "peer_mm": 1.1,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         }
       ],
       "rolling": [
@@ -440,8 +440,8 @@
         },
         "peer_mm": 1.1,
         "agreement": "一致",
-        "official_level": "无雨",
-        "official_text": "多云"
+        "official_level": null,
+        "official_text": null
       },
       "overall_concern": "无"
     }
@@ -676,8 +676,10 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-15T18:00",
-    "errors": [],
+    "fetched_at": "2026-11-15T18:04",
+    "errors": [
+      "白云: <urlopen error _ssl.c:994: The handshake operation timed out>"
+    ],
     "districts": {
       "从化": {
         "2026-11-15": {
@@ -738,36 +740,6 @@
           "text": "多云",
           "level": "无雨"
         }
-      },
-      "白云": {
-        "2026-11-15": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-16": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-17": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-18": {
-          "text": "小雨转多云",
-          "level": "小雨"
-        },
-        "2026-11-19": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-20": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-21": {
-          "text": "多云",
-          "level": "无雨"
-        }
       }
     }
   },
@@ -776,7 +748,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-15T18:00",
+      "fetched_at": "2026-11-15T18:04",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +756,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-15T18:00",
+      "fetched_at": "2026-11-15T18:04",
       "errors": []
     }
   },
