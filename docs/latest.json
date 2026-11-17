@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-17T11:00",
+  "run_time": "2026-11-17T11:17",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-17T11:00",
+    "fetched_at": "2026-11-17T11:17",
     "errors": [],
     "districts": {
       "从化": {
@@ -735,8 +735,8 @@
           "level": "小雨"
         },
         "2026-11-23": {
-          "text": "小雨转大雨",
-          "level": "大雨"
+          "text": "小雨转中雨",
+          "level": "中雨"
         }
       },
       "白云": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-17T11:00",
+      "fetched_at": "2026-11-17T11:17",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-17T11:00",
+      "fetched_at": "2026-11-17T11:17",
       "errors": []
     }
   },
