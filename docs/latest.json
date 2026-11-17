@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-18T01:05",
+  "run_time": "2026-11-18T02:05",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -95,7 +95,7 @@
             "mm": 1.4,
             "level": "小雨"
           },
-          "peer_mm": 0.9,
+          "peer_mm": 0.5,
           "agreement": "一致",
           "official_level": "无雨",
           "official_text": "多云"
@@ -260,26 +260,26 @@
         },
         {
           "hours": 72,
-          "mm": 7.5,
+          "mm": 7.3,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 9.0
+            "mm": 8.7
           }
         },
         {
           "hours": 120,
-          "mm": 7.5,
+          "mm": 7.3,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 9.0
+            "mm": 8.7
           }
         }
       ],
@@ -568,8 +568,8 @@
       },
       "rolling": {
         "24": 6.0,
-        "72": 9.0,
-        "120": 9.0
+        "72": 8.7,
+        "120": 8.7
       }
     },
     "HD-03": {
@@ -593,8 +593,8 @@
       },
       "rolling": {
         "24": 4.5,
-        "72": 8.6,
-        "120": 8.6
+        "72": 8.5,
+        "120": 8.5
       }
     },
     "BY-01": {
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-18T01:05",
+    "fetched_at": "2026-11-18T02:05",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-18T01:05",
+      "fetched_at": "2026-11-18T02:05",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-18T01:05",
+      "fetched_at": "2026-11-18T02:05",
       "errors": []
     }
   },
