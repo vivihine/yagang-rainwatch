@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-20T02:00",
+  "run_time": "2026-11-20T03:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -95,8 +95,8 @@
             "mm": 0.3,
             "level": "小雨"
           },
-          "peer_mm": 0.5,
-          "agreement": "一致",
+          "peer_mm": 12.2,
+          "agreement": "分歧",
           "official_level": "无雨",
           "official_text": "多云"
         }
@@ -104,31 +104,31 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 3.1,
+          "mm": 2.7,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 3.1
+            "mm": 2.7
           }
         },
         {
           "hours": 72,
-          "mm": 3.1,
+          "mm": 2.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 3.1
+            "mm": 2.7
           }
         },
         {
           "hours": 120,
-          "mm": 10.6,
+          "mm": 10.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -239,7 +239,7 @@
             "mm": 1.8,
             "level": "小雨"
           },
-          "peer_mm": 0.7,
+          "peer_mm": 5.7,
           "agreement": "一致",
           "official_level": "无雨",
           "official_text": "多云"
@@ -248,38 +248,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 4.1,
+          "mm": 3.8,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 4.8
+            "mm": 4.5
           }
         },
         {
           "hours": 72,
-          "mm": 4.1,
+          "mm": 3.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 4.8
+            "mm": 4.5
           }
         },
         {
           "hours": 120,
-          "mm": 15.6,
+          "mm": 15.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 16.5
+            "mm": 16.3
           }
         }
       ],
@@ -383,7 +383,7 @@
             "mm": 1.7,
             "level": "小雨"
           },
-          "peer_mm": 0.8,
+          "peer_mm": 3.4,
           "agreement": "一致",
           "official_level": "无雨",
           "official_text": "多云"
@@ -392,31 +392,31 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 3.9,
+          "mm": 3.7,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 4.0
+            "mm": 3.9
           }
         },
         {
           "hours": 72,
-          "mm": 3.9,
+          "mm": 3.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 4.0
+            "mm": 3.9
           }
         },
         {
           "hours": 120,
-          "mm": 14.5,
+          "mm": 14.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -467,8 +467,8 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.1,
-        "72": 3.1,
+        "24": 2.7,
+        "72": 2.7,
         "120": 10.8
       }
     },
@@ -492,8 +492,8 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.1,
-        "72": 3.1,
+        "24": 2.7,
+        "72": 2.7,
         "120": 11.3
       }
     },
@@ -517,9 +517,9 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.1,
-        "72": 3.1,
-        "120": 9.6
+        "24": 2.7,
+        "72": 2.7,
+        "120": 9.5
       }
     },
     "HD-01": {
@@ -542,8 +542,8 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.7,
-        "72": 3.7,
+        "24": 3.6,
+        "72": 3.6,
         "120": 15.0
       }
     },
@@ -567,9 +567,9 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 4.8,
-        "72": 4.8,
-        "120": 16.5
+        "24": 4.5,
+        "72": 4.5,
+        "120": 16.3
       }
     },
     "HD-03": {
@@ -592,9 +592,9 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.7,
-        "72": 3.7,
-        "120": 15.3
+        "24": 3.3,
+        "72": 3.3,
+        "120": 15.2
       }
     },
     "BY-01": {
@@ -617,9 +617,9 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 3.7,
-        "72": 3.7,
-        "120": 13.4
+        "24": 3.3,
+        "72": 3.3,
+        "120": 13.3
       }
     },
     "BY-02": {
@@ -642,8 +642,8 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 4.0,
-        "72": 4.0,
+        "24": 3.9,
+        "72": 3.9,
         "120": 15.0
       }
     },
@@ -667,8 +667,8 @@
         "2026-11-24": "小雨"
       },
       "rolling": {
-        "24": 4.0,
-        "72": 4.0,
+        "24": 3.9,
+        "72": 3.9,
         "120": 15.0
       }
     }
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-20T02:00",
+    "fetched_at": "2026-11-20T03:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -820,7 +820,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-20T02:00",
+      "fetched_at": "2026-11-20T03:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -828,17 +828,17 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-20T02:00",
+      "fetched_at": "2026-11-20T03:00",
       "errors": []
     }
   },
   "agreement": {
-    "status": "ok",
-    "summary": "两源一致",
+    "status": "partial",
+    "summary": "两源分歧 1/15 天，建议谨慎使用",
     "counts": {
-      "一致": 15,
+      "一致": 14,
       "接近": 0,
-      "分歧": 0,
+      "分歧": 1,
       "无对比": 0
     }
   }
