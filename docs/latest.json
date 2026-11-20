@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-20T16:00",
+  "run_time": "2026-11-20T17:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -33,8 +33,8 @@
           },
           "peer_mm": 0.0,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-22",
@@ -49,8 +49,8 @@
           },
           "peer_mm": 0.0,
           "agreement": "一致",
-          "official_level": "小雨",
-          "official_text": "多云转小雨"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-23",
@@ -63,10 +63,10 @@
             "mm": 3.3,
             "level": "小雨"
           },
-          "peer_mm": 4.3,
+          "peer_mm": 7.6,
           "agreement": "一致",
-          "official_level": "中雨",
-          "official_text": "小雨转中雨"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-24",
@@ -81,8 +81,8 @@
           },
           "peer_mm": 0.5,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         },
         {
           "date": "2026-11-25",
@@ -97,45 +97,45 @@
           },
           "peer_mm": 3.5,
           "agreement": "一致",
-          "official_level": "无雨",
-          "official_text": "多云"
+          "official_level": null,
+          "official_text": null
         }
       ],
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.3,
+          "mm": 0.1,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "太平场镇",
-            "mm": 0.4
+            "mm": 0.2
           }
         },
         {
           "hours": 72,
-          "mm": 0.7,
+          "mm": 0.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 0.9
+            "mm": 0.6
           }
         },
         {
           "hours": 120,
-          "mm": 4.9,
+          "mm": 4.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 5.0
+            "mm": 4.9
           }
         }
       ],
@@ -152,8 +152,8 @@
         },
         "peer_mm": 0.5,
         "agreement": "一致",
-        "official_level": "无雨",
-        "official_text": "多云"
+        "official_level": null,
+        "official_text": null
       },
       "overall_concern": "无"
     },
@@ -207,7 +207,7 @@
             "mm": 5.0,
             "level": "小雨"
           },
-          "peer_mm": 7.4,
+          "peer_mm": 7.2,
           "agreement": "一致",
           "official_level": "中雨",
           "official_text": "小雨转中雨"
@@ -248,38 +248,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.4,
+          "mm": 0.2,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 0.4
+            "mm": 0.2
           }
         },
         {
           "hours": 72,
-          "mm": 1.4,
+          "mm": 1.0,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白坭墟",
-            "mm": 1.7
+            "mm": 1.3
           }
         },
         {
           "hours": 120,
-          "mm": 6.5,
+          "mm": 6.3,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
-            "name": "花都城区",
-            "mm": 7.3
+            "name": "白坭墟",
+            "mm": 7.2
           }
         }
       ],
@@ -351,7 +351,7 @@
             "mm": 3.8,
             "level": "小雨"
           },
-          "peer_mm": 5.4,
+          "peer_mm": 5.3,
           "agreement": "一致",
           "official_level": "中雨",
           "official_text": "小雨转中雨"
@@ -392,38 +392,38 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.5,
+          "mm": 0.3,
           "level": "小雨",
           "level_kind": "24h累计",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "白云河口",
-            "mm": 0.6
+            "mm": 0.3
           }
         },
         {
           "hours": 72,
-          "mm": 1.0,
+          "mm": 0.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 1.1
+            "mm": 0.8
           }
         },
         {
           "hours": 120,
-          "mm": 4.2,
+          "mm": 4.1,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 5.8
+            "mm": 5.6
           }
         }
       ],
@@ -467,9 +467,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 0.9,
-        "120": 5.0
+        "24": 0.1,
+        "72": 0.6,
+        "120": 4.9
       }
     },
     "CH-02": {
@@ -492,9 +492,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.4,
-        "72": 0.8,
-        "120": 4.9
+        "24": 0.2,
+        "72": 0.5,
+        "120": 4.7
       }
     },
     "CH-03": {
@@ -517,9 +517,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 0.4,
-        "120": 4.9
+        "24": 0.1,
+        "72": 0.3,
+        "120": 4.7
       }
     },
     "HD-01": {
@@ -542,9 +542,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.4,
-        "72": 0.9,
-        "120": 4.9
+        "24": 0.2,
+        "72": 0.7,
+        "120": 4.7
       }
     },
     "HD-02": {
@@ -567,8 +567,8 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.4,
-        "72": 1.7,
+        "24": 0.2,
+        "72": 1.3,
         "120": 7.2
       }
     },
@@ -592,9 +592,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.4,
-        "72": 1.5,
-        "120": 7.3
+        "24": 0.2,
+        "72": 1.0,
+        "120": 7.1
       }
     },
     "BY-01": {
@@ -617,9 +617,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.4,
-        "72": 1.1,
-        "120": 5.8
+        "24": 0.2,
+        "72": 0.8,
+        "120": 5.6
       }
     },
     "BY-02": {
@@ -642,9 +642,9 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.6,
-        "72": 0.9,
-        "120": 3.4
+        "24": 0.3,
+        "72": 0.7,
+        "120": 3.3
       }
     },
     "BY-03": {
@@ -667,48 +667,20 @@
         "2026-11-25": "小雨"
       },
       "rolling": {
-        "24": 0.6,
-        "72": 0.9,
-        "120": 3.4
+        "24": 0.3,
+        "72": 0.7,
+        "120": 3.3
       }
     }
   },
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-20T16:00",
-    "errors": [],
+    "fetched_at": "2026-11-20T17:00",
+    "errors": [
+      "从化: <urlopen error _ssl.c:994: The handshake operation timed out>"
+    ],
     "districts": {
-      "从化": {
-        "2026-11-20": {
-          "text": "小雨转多云",
-          "level": "小雨"
-        },
-        "2026-11-21": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-22": {
-          "text": "多云转小雨",
-          "level": "小雨"
-        },
-        "2026-11-23": {
-          "text": "小雨转中雨",
-          "level": "中雨"
-        },
-        "2026-11-24": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-25": {
-          "text": "多云",
-          "level": "无雨"
-        },
-        "2026-11-26": {
-          "text": "多云",
-          "level": "无雨"
-        }
-      },
       "花都": {
         "2026-11-20": {
           "text": "小雨转多云",
@@ -773,13 +745,6 @@
   },
   "official_events": [
     {
-      "district": "从化",
-      "date": "2026-11-23",
-      "level": "中雨",
-      "text": "小雨转中雨",
-      "primary_mm": 3.2
-    },
-    {
       "district": "花都",
       "date": "2026-11-23",
       "level": "中雨",
@@ -795,13 +760,6 @@
     }
   ],
   "official_divergence": [
-    {
-      "district": "从化",
-      "date": "2026-11-23",
-      "level": "中雨",
-      "text": "小雨转中雨",
-      "primary_mm": 3.2
-    },
     {
       "district": "花都",
       "date": "2026-11-23",
@@ -820,7 +778,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-20T16:00",
+      "fetched_at": "2026-11-20T17:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -828,7 +786,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-20T16:00",
+      "fetched_at": "2026-11-20T17:00",
       "errors": []
     }
   },
