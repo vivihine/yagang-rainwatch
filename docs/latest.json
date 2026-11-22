@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-22T12:00",
+  "run_time": "2026-11-22T13:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -104,14 +104,14 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.0,
-          "level": "无雨",
+          "mm": 0.1,
+          "level": "小雨",
           "level_kind": "24h累计",
-          "max_daily_level": "无雨",
+          "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 0.0
+            "mm": 0.2
           }
         },
         {
@@ -411,7 +411,7 @@
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 10.2
+            "mm": 10.3
           }
         },
         {
@@ -467,7 +467,7 @@
         "2026-11-27": "小雨"
       },
       "rolling": {
-        "24": 0.0,
+        "24": 0.2,
         "72": 7.8,
         "120": 13.4
       }
@@ -493,7 +493,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 8.4,
+        "72": 8.5,
         "120": 14.9
       }
     },
@@ -517,7 +517,7 @@
         "2026-11-27": "小雨"
       },
       "rolling": {
-        "24": 0.0,
+        "24": 0.2,
         "72": 9.3,
         "120": 18.2
       }
@@ -568,7 +568,7 @@
       },
       "rolling": {
         "24": 0.3,
-        "72": 8.4,
+        "72": 8.5,
         "120": 17.8
       }
     },
@@ -618,7 +618,7 @@
       },
       "rolling": {
         "24": 0.3,
-        "72": 10.2,
+        "72": 10.3,
         "120": 11.2
       }
     },
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-22T12:00",
+    "fetched_at": "2026-11-22T13:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-22T12:00",
+      "fetched_at": "2026-11-22T13:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-22T12:00",
+      "fetched_at": "2026-11-22T13:00",
       "errors": []
     }
   },
