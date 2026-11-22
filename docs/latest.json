@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-22T22:00",
+  "run_time": "2026-11-22T23:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -177,8 +177,8 @@
           },
           "peer_mm": 0.7,
           "agreement": "一致",
-          "official_level": null,
-          "official_text": null
+          "official_level": "中雨",
+          "official_text": "中雨转小雨"
         },
         {
           "date": "2026-11-24",
@@ -193,8 +193,8 @@
           },
           "peer_mm": 2.9,
           "agreement": "一致",
-          "official_level": null,
-          "official_text": null
+          "official_level": "小雨",
+          "official_text": "小雨"
         },
         {
           "date": "2026-11-25",
@@ -209,8 +209,8 @@
           },
           "peer_mm": 0.3,
           "agreement": "分歧",
-          "official_level": null,
-          "official_text": null
+          "official_level": "小雨",
+          "official_text": "小雨转多云"
         },
         {
           "date": "2026-11-26",
@@ -225,8 +225,8 @@
           },
           "peer_mm": 0.0,
           "agreement": "一致",
-          "official_level": null,
-          "official_text": null
+          "official_level": "无雨",
+          "official_text": "多云"
         },
         {
           "date": "2026-11-27",
@@ -241,8 +241,8 @@
           },
           "peer_mm": 0.0,
           "agreement": "一致",
-          "official_level": null,
-          "official_text": null
+          "official_level": "无雨",
+          "official_text": "多云"
         }
       ],
       "rolling": [
@@ -254,20 +254,20 @@
           "max_daily_level": "无雨",
           "concern": "无",
           "max_point": {
-            "name": "大坳",
-            "mm": 0.0
+            "name": "白坭墟",
+            "mm": 0.1
           }
         },
         {
           "hours": 72,
-          "mm": 28.0,
+          "mm": 28.1,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
           "concern": "关注",
           "max_point": {
             "name": "白坭墟",
-            "mm": 37.6
+            "mm": 37.7
           }
         },
         {
@@ -296,8 +296,8 @@
         },
         "peer_mm": 0.3,
         "agreement": "分歧",
-        "official_level": null,
-        "official_text": null
+        "official_level": "小雨",
+        "official_text": "小雨转多云"
       },
       "overall_concern": "关注"
     },
@@ -404,7 +404,7 @@
         },
         {
           "hours": 72,
-          "mm": 20.6,
+          "mm": 20.8,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "中雨",
@@ -518,7 +518,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 17.3,
+        "72": 17.5,
         "120": 23.5
       }
     },
@@ -543,7 +543,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 15.4,
+        "72": 15.7,
         "120": 23.7
       }
     },
@@ -567,8 +567,8 @@
         "2026-11-27": "小雨"
       },
       "rolling": {
-        "24": 0.0,
-        "72": 37.6,
+        "24": 0.1,
+        "72": 37.7,
         "120": 39.3
       }
     },
@@ -643,7 +643,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 15.4,
+        "72": 15.7,
         "120": 18.6
       }
     },
@@ -668,7 +668,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 15.4,
+        "72": 15.7,
         "120": 18.6
       }
     }
@@ -676,10 +676,8 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-22T22:00",
-    "errors": [
-      "花都: <urlopen error _ssl.c:994: The handshake operation timed out>"
-    ],
+    "fetched_at": "2026-11-22T23:00",
+    "errors": [],
     "districts": {
       "从化": {
         "2026-11-22": {
@@ -689,6 +687,36 @@
         "2026-11-23": {
           "text": "小雨",
           "level": "小雨"
+        },
+        "2026-11-24": {
+          "text": "小雨",
+          "level": "小雨"
+        },
+        "2026-11-25": {
+          "text": "小雨转多云",
+          "level": "小雨"
+        },
+        "2026-11-26": {
+          "text": "多云",
+          "level": "无雨"
+        },
+        "2026-11-27": {
+          "text": "多云",
+          "level": "无雨"
+        },
+        "2026-11-28": {
+          "text": "多云",
+          "level": "无雨"
+        }
+      },
+      "花都": {
+        "2026-11-22": {
+          "text": "阴",
+          "level": "无雨"
+        },
+        "2026-11-23": {
+          "text": "中雨转小雨",
+          "level": "中雨"
         },
         "2026-11-24": {
           "text": "小雨",
@@ -743,12 +771,28 @@
       }
     }
   },
-  "official_events": [],
-  "official_divergence": [],
+  "official_events": [
+    {
+      "district": "花都",
+      "date": "2026-11-23",
+      "level": "中雨",
+      "text": "中雨转小雨",
+      "primary_mm": 3.2
+    }
+  ],
+  "official_divergence": [
+    {
+      "district": "花都",
+      "date": "2026-11-23",
+      "level": "中雨",
+      "text": "中雨转小雨",
+      "primary_mm": 3.2
+    }
+  ],
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-22T22:00",
+      "fetched_at": "2026-11-22T23:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -756,7 +800,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-22T22:00",
+      "fetched_at": "2026-11-22T23:00",
       "errors": []
     }
   },
