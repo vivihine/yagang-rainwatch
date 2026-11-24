@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-24T10:36",
+  "run_time": "2026-11-24T11:05",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -104,31 +104,31 @@
       "rolling": [
         {
           "hours": 24,
-          "mm": 0.1,
-          "level": "小雨",
+          "mm": 0.0,
+          "level": "无雨",
           "level_kind": "24h累计",
-          "max_daily_level": "小雨",
+          "max_daily_level": "无雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 0.2
+            "mm": 0.1
           }
         },
         {
           "hours": 72,
-          "mm": 0.5,
+          "mm": 0.4,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "流溪河山庄",
-            "mm": 0.6
+            "mm": 0.5
           }
         },
         {
           "hours": 120,
-          "mm": 0.6,
+          "mm": 0.5,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -260,26 +260,26 @@
         },
         {
           "hours": 72,
-          "mm": 0.5,
-          "level": "小雨",
+          "mm": 0.3,
+          "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "花都城区",
-            "mm": 0.9
+            "mm": 0.4
           }
         },
         {
           "hours": 120,
-          "mm": 0.5,
-          "level": "小雨",
+          "mm": 0.3,
+          "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "花都城区",
-            "mm": 0.9
+            "mm": 0.4
           }
         }
       ],
@@ -404,26 +404,26 @@
         },
         {
           "hours": 72,
-          "mm": 0.4,
-          "level": "小雨",
-          "level_kind": "日均强度",
-          "max_daily_level": "小雨",
-          "concern": "无",
-          "max_point": {
-            "name": "李溪坝",
-            "mm": 0.7
-          }
-        },
-        {
-          "hours": 120,
-          "mm": 0.4,
+          "mm": 0.2,
           "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
           "concern": "无",
           "max_point": {
             "name": "李溪坝",
-            "mm": 0.7
+            "mm": 0.3
+          }
+        },
+        {
+          "hours": 120,
+          "mm": 0.2,
+          "level": "无雨",
+          "level_kind": "日均强度",
+          "max_daily_level": "小雨",
+          "concern": "无",
+          "max_point": {
+            "name": "李溪坝",
+            "mm": 0.3
           }
         }
       ],
@@ -467,9 +467,9 @@
         "2026-11-29": "无雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 0.6,
-        "120": 0.6
+        "24": 0.1,
+        "72": 0.5,
+        "120": 0.5
       }
     },
     "CH-02": {
@@ -492,9 +492,9 @@
         "2026-11-29": "无雨"
       },
       "rolling": {
-        "24": 0.2,
-        "72": 0.5,
-        "120": 0.5
+        "24": 0.0,
+        "72": 0.3,
+        "120": 0.3
       }
     },
     "CH-03": {
@@ -543,8 +543,8 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.3,
-        "120": 0.3
+        "72": 0.1,
+        "120": 0.1
       }
     },
     "HD-02": {
@@ -593,8 +593,8 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.9,
-        "120": 0.9
+        "72": 0.4,
+        "120": 0.4
       }
     },
     "BY-01": {
@@ -618,8 +618,8 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.7,
-        "120": 0.7
+        "72": 0.3,
+        "120": 0.3
       }
     },
     "BY-02": {
@@ -643,8 +643,8 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.3,
-        "120": 0.3
+        "72": 0.1,
+        "120": 0.1
       }
     },
     "BY-03": {
@@ -668,15 +668,15 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.3,
-        "120": 0.3
+        "72": 0.1,
+        "120": 0.1
       }
     }
   },
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-24T10:36",
+    "fetched_at": "2026-11-24T11:05",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-24T10:36",
+      "fetched_at": "2026-11-24T11:05",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-24T10:36",
+      "fetched_at": "2026-11-24T11:05",
       "errors": []
     }
   },
