@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-24T14:00",
+  "run_time": "2026-11-24T15:05",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -116,7 +116,7 @@
         },
         {
           "hours": 72,
-          "mm": 0.6,
+          "mm": 0.7,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "小雨",
@@ -468,7 +468,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.2,
+        "72": 0.4,
         "120": 0.5
       }
     },
@@ -493,7 +493,7 @@
       },
       "rolling": {
         "24": 0.0,
-        "72": 0.3,
+        "72": 0.5,
         "120": 0.5
       }
     },
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-24T14:00",
+    "fetched_at": "2026-11-24T15:05",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-24T14:00",
+      "fetched_at": "2026-11-24T15:05",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-24T14:00",
+      "fetched_at": "2026-11-24T15:05",
       "errors": []
     }
   },
