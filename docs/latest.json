@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-25T17:00",
+  "run_time": "2026-11-25T18:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -66,7 +66,7 @@
           "peer_mm": 0.0,
           "agreement": "一致",
           "official_level": "无雨",
-          "official_text": "多云"
+          "official_text": "晴转多云"
         },
         {
           "date": "2026-11-29",
@@ -193,8 +193,8 @@
           },
           "peer_mm": 1.9,
           "agreement": "一致",
-          "official_level": "小雨",
-          "official_text": "小雨转晴"
+          "official_level": "无雨",
+          "official_text": "多云转晴"
         },
         {
           "date": "2026-11-28",
@@ -210,7 +210,7 @@
           "peer_mm": 0.0,
           "agreement": "一致",
           "official_level": "无雨",
-          "official_text": "多云"
+          "official_text": "晴转多云"
         },
         {
           "date": "2026-11-29",
@@ -354,7 +354,7 @@
           "peer_mm": 0.0,
           "agreement": "一致",
           "official_level": "无雨",
-          "official_text": "多云"
+          "official_text": "晴转多云"
         },
         {
           "date": "2026-11-29",
@@ -404,7 +404,7 @@
         },
         {
           "hours": 72,
-          "mm": 2.0,
+          "mm": 1.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
@@ -416,7 +416,7 @@
         },
         {
           "hours": 120,
-          "mm": 2.0,
+          "mm": 1.9,
           "level": "小雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
@@ -643,8 +643,8 @@
       },
       "rolling": {
         "24": 0.3,
-        "72": 0.7,
-        "120": 0.7
+        "72": 0.6,
+        "120": 0.6
       }
     },
     "BY-03": {
@@ -668,21 +668,21 @@
       },
       "rolling": {
         "24": 0.3,
-        "72": 0.7,
-        "120": 0.7
+        "72": 0.6,
+        "120": 0.6
       }
     }
   },
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-25T17:00",
+    "fetched_at": "2026-11-25T18:00",
     "errors": [],
     "districts": {
       "从化": {
         "2026-11-25": {
-          "text": "小雨",
-          "level": "小雨"
+          "text": "多云",
+          "level": "无雨"
         },
         "2026-11-26": {
           "text": "晴转多云",
@@ -693,7 +693,7 @@
           "level": "无雨"
         },
         "2026-11-28": {
-          "text": "多云",
+          "text": "晴转多云",
           "level": "无雨"
         },
         "2026-11-29": {
@@ -711,19 +711,19 @@
       },
       "花都": {
         "2026-11-25": {
-          "text": "小雨",
-          "level": "小雨"
+          "text": "多云",
+          "level": "无雨"
         },
         "2026-11-26": {
           "text": "晴",
           "level": "无雨"
         },
         "2026-11-27": {
-          "text": "小雨转晴",
-          "level": "小雨"
+          "text": "多云转晴",
+          "level": "无雨"
         },
         "2026-11-28": {
-          "text": "多云",
+          "text": "晴转多云",
           "level": "无雨"
         },
         "2026-11-29": {
@@ -741,8 +741,8 @@
       },
       "白云": {
         "2026-11-25": {
-          "text": "小雨",
-          "level": "小雨"
+          "text": "多云",
+          "level": "无雨"
         },
         "2026-11-26": {
           "text": "晴转多云",
@@ -753,7 +753,7 @@
           "level": "无雨"
         },
         "2026-11-28": {
-          "text": "多云",
+          "text": "晴转多云",
           "level": "无雨"
         },
         "2026-11-29": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-25T17:00",
+      "fetched_at": "2026-11-25T18:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-25T17:00",
+      "fetched_at": "2026-11-25T18:00",
       "errors": []
     }
   },
