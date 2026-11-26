@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-26T17:00",
+  "run_time": "2026-11-26T17:59",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -175,7 +175,7 @@
             "mm": 0.0,
             "level": "无雨"
           },
-          "peer_mm": 1.9,
+          "peer_mm": 0.7,
           "agreement": "一致",
           "official_level": "无雨",
           "official_text": "多云转晴"
@@ -294,7 +294,7 @@
           "mm": 0.0,
           "level": "无雨"
         },
-        "peer_mm": 1.9,
+        "peer_mm": 0.7,
         "agreement": "一致",
         "official_level": "无雨",
         "official_text": "多云转晴"
@@ -319,7 +319,7 @@
             "mm": 0.0,
             "level": "无雨"
           },
-          "peer_mm": 2.0,
+          "peer_mm": 0.7,
           "agreement": "一致",
           "official_level": "无雨",
           "official_text": "多云转晴"
@@ -438,7 +438,7 @@
           "mm": 0.0,
           "level": "无雨"
         },
-        "peer_mm": 2.0,
+        "peer_mm": 0.7,
         "agreement": "一致",
         "official_level": "无雨",
         "official_text": "多云转晴"
@@ -676,12 +676,12 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-26T17:00",
+    "fetched_at": "2026-11-26T17:59",
     "errors": [],
     "districts": {
       "从化": {
         "2026-11-26": {
-          "text": "晴转多云",
+          "text": "多云",
           "level": "无雨"
         },
         "2026-11-27": {
@@ -705,7 +705,7 @@
           "level": "无雨"
         },
         "2026-12-02": {
-          "text": "多云转阴",
+          "text": "多云",
           "level": "无雨"
         }
       },
@@ -735,13 +735,13 @@
           "level": "无雨"
         },
         "2026-12-02": {
-          "text": "多云转阴",
+          "text": "多云",
           "level": "无雨"
         }
       },
       "白云": {
         "2026-11-26": {
-          "text": "晴转多云",
+          "text": "多云",
           "level": "无雨"
         },
         "2026-11-27": {
@@ -765,7 +765,7 @@
           "level": "无雨"
         },
         "2026-12-02": {
-          "text": "多云转阴",
+          "text": "多云",
           "level": "无雨"
         }
       }
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-26T17:00",
+      "fetched_at": "2026-11-26T17:59",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-26T17:00",
+      "fetched_at": "2026-11-26T17:59",
       "errors": []
     }
   },
