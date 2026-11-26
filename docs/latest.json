@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-26T21:00",
+  "run_time": "2026-11-26T22:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -272,14 +272,14 @@
         },
         {
           "hours": 120,
-          "mm": 0.1,
+          "mm": 0.0,
           "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
           "concern": "无",
           "max_point": {
             "name": "大坳",
-            "mm": 0.1
+            "mm": 0.0
           }
         }
       ],
@@ -361,7 +361,7 @@
           "mm": 0.0,
           "level": "无雨",
           "concern": "无",
-          "spread_mm": 0.0,
+          "spread_mm": 0.2,
           "max_point": {
             "name": "李溪坝",
             "mm": 0.0,
@@ -544,7 +544,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.1
+        "120": 0.0
       }
     },
     "HD-02": {
@@ -569,7 +569,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.1
+        "120": 0.0
       }
     },
     "HD-03": {
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-26T21:00",
+    "fetched_at": "2026-11-26T22:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-26T21:00",
+      "fetched_at": "2026-11-26T22:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-26T21:00",
+      "fetched_at": "2026-11-26T22:00",
       "errors": []
     }
   },
