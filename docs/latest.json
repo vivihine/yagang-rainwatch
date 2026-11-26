@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-27T01:00",
+  "run_time": "2026-11-27T02:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -416,14 +416,14 @@
         },
         {
           "hours": 120,
-          "mm": 0.1,
+          "mm": 0.0,
           "level": "无雨",
           "level_kind": "日均强度",
           "max_daily_level": "无雨",
           "concern": "无",
           "max_point": {
-            "name": "白云河口",
-            "mm": 0.1
+            "name": "李溪坝",
+            "mm": 0.0
           }
         }
       ],
@@ -644,7 +644,7 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.1
+        "120": 0.0
       }
     },
     "BY-03": {
@@ -669,14 +669,14 @@
       "rolling": {
         "24": 0.0,
         "72": 0.0,
-        "120": 0.1
+        "120": 0.0
       }
     }
   },
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-27T01:00",
+    "fetched_at": "2026-11-27T02:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-27T01:00",
+      "fetched_at": "2026-11-27T02:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-27T01:00",
+      "fetched_at": "2026-11-27T02:00",
       "errors": []
     }
   },
