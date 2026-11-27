@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-27T12:00",
+  "run_time": "2026-11-27T13:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -57,7 +57,7 @@
           "mm": 0.0,
           "level": "无雨",
           "concern": "无",
-          "spread_mm": 1.0,
+          "spread_mm": 0.3,
           "max_point": {
             "name": "流溪河山庄",
             "mm": 0.0,
@@ -201,7 +201,7 @@
           "mm": 0.0,
           "level": "无雨",
           "concern": "无",
-          "spread_mm": 1.7,
+          "spread_mm": 0.0,
           "max_point": {
             "name": "大坳",
             "mm": 0.0,
@@ -345,7 +345,7 @@
           "mm": 0.0,
           "level": "无雨",
           "concern": "无",
-          "spread_mm": 0.8,
+          "spread_mm": 0.4,
           "max_point": {
             "name": "李溪坝",
             "mm": 0.0,
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-27T12:00",
+    "fetched_at": "2026-11-27T13:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-27T12:00",
+      "fetched_at": "2026-11-27T13:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-27T12:00",
+      "fetched_at": "2026-11-27T13:00",
       "errors": []
     }
   },
