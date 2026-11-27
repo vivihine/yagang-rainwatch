@@ -1,5 +1,5 @@
 {
-  "run_time": "2026-11-27T07:00",
+  "run_time": "2026-11-27T08:00",
   "timezone": "Asia/Shanghai",
   "primary": "openmeteo",
   "primary_label": "Open-Meteo",
@@ -66,7 +66,7 @@
           "peer_mm": 0.0,
           "agreement": "一致",
           "official_level": "无雨",
-          "official_text": "晴转多云"
+          "official_text": "晴"
         },
         {
           "date": "2026-11-30",
@@ -210,7 +210,7 @@
           "peer_mm": 0.0,
           "agreement": "一致",
           "official_level": "无雨",
-          "official_text": "晴转多云"
+          "official_text": "晴"
         },
         {
           "date": "2026-11-30",
@@ -676,7 +676,7 @@
   "warnings": [],
   "chinawx": {
     "enabled": true,
-    "fetched_at": "2026-11-27T07:00",
+    "fetched_at": "2026-11-27T08:00",
     "errors": [],
     "districts": {
       "从化": {
@@ -689,7 +689,7 @@
           "level": "无雨"
         },
         "2026-11-29": {
-          "text": "晴转多云",
+          "text": "晴",
           "level": "无雨"
         },
         "2026-11-30": {
@@ -705,7 +705,7 @@
           "level": "无雨"
         },
         "2026-12-03": {
-          "text": "多云",
+          "text": "阴",
           "level": "无雨"
         }
       },
@@ -719,7 +719,7 @@
           "level": "无雨"
         },
         "2026-11-29": {
-          "text": "晴转多云",
+          "text": "晴",
           "level": "无雨"
         },
         "2026-11-30": {
@@ -735,7 +735,7 @@
           "level": "无雨"
         },
         "2026-12-03": {
-          "text": "多云",
+          "text": "阴",
           "level": "无雨"
         }
       },
@@ -765,7 +765,7 @@
           "level": "无雨"
         },
         "2026-12-03": {
-          "text": "多云",
+          "text": "多云转阴",
           "level": "无雨"
         }
       }
@@ -776,7 +776,7 @@
   "sources": {
     "primary": "openmeteo",
     "openmeteo": {
-      "fetched_at": "2026-11-27T07:00",
+      "fetched_at": "2026-11-27T08:00",
       "models": [
         "ecmwf_ifs025",
         "gfs_seamless",
@@ -784,7 +784,7 @@
       ]
     },
     "qweather": {
-      "fetched_at": "2026-11-27T07:00",
+      "fetched_at": "2026-11-27T08:00",
       "errors": []
     }
   },
