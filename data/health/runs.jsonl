@@ -419,3 +419,4 @@
 {"ts": "2026-11-28T06:00", "status": "ok", "push_kind": "none", "source_errors": {"openmeteo": 0, "qweather": 0, "chinawx": 0}}
 {"ts": "2026-11-28T06:17", "status": "ok", "push_kind": "none", "source_errors": {"openmeteo": 0, "qweather": 0, "chinawx": 0}}
 {"ts": "2026-11-28T07:00", "status": "ok", "push_kind": "none", "source_errors": {"openmeteo": 0, "qweather": 0, "chinawx": 0}}
+{"ts": "2026-11-28T08:00", "status": "ok", "push_kind": "daily", "source_errors": {"openmeteo": 0, "qweather": 0, "chinawx": 0}}
